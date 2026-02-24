@@ -1,0 +1,64 @@
+name: gongje
+options:
+  developmentLanguage: en
+  bundleIdPrefix: com.akito
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+  knownRegions:
+    - en
+    - zh-Hant-TW
+    - zh-Hant-HK
+
+packages:
+  WhisperKit:
+    url: https://github.com/argmaxinc/WhisperKit.git
+    from: "0.12.0"
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts.git
+    from: "2.2.0"
+  mlx-swift-lm:
+    url: https://github.com/ml-explore/mlx-swift-lm.git
+    from: "2.30.0"
+
+targets:
+  gongje:
+    type: application
+    platform: macOS
+    sources:
+      - gongje
+    dependencies:
+      - package: WhisperKit
+      - package: KeyboardShortcuts
+      - package: mlx-swift-lm
+        product: MLXLLM
+      - package: mlx-swift-lm
+        product: MLXLMCommon
+    configFiles:
+      Debug: Local.xcconfig
+      Release: Local.xcconfig
+    settings:
+      base:
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: "1"
+        INFOPLIST_FILE: gongje/Resources/Info.plist
+        CODE_SIGN_ENTITLEMENTS: gongje/Resources/gongje.entitlements
+        SWIFT_VERSION: "5.9"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        ENABLE_HARDENED_RUNTIME: false
+    entitlements:
+      path: gongje/Resources/gongje.entitlements
+      properties: {}  # don't overwrite, use existing file
+
+  gongjeTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - gongjeTests
+    dependencies:
+      - target: gongje
+    settings:
+      base:
+        SWIFT_VERSION: "5.9"

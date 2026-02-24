@@ -1,0 +1,637 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0DA811AA603F8AED3E5A0673 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 1785D82BC0100FB9B53319F1 /* KeyboardShortcuts */; };
+		19DE6D83FE6C953839DBD9FC /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D06EA9C531C5F153951B6 /* ModelManager.swift */; };
+		20CB89249C2AFA0731D3A074 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2CA35FFB0B3586F9B9EDA40B /* WhisperKit */; };
+		253711BEAF2746C51AF5B369 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE4ED6640CA3B04028DD3D3 /* MLXLLM */; };
+		392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3628216DF133D2A02265B0F /* AudioEngine.swift */; };
+		43BFA531B670B80FB469EFC4 /* FrequencyAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */; };
+		4AB7FB92CEB2D6F668162481 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDD84836AB84FE5C7E37A6 /* AppState.swift */; };
+		4D3A31D57B6D40DA6141C793 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B5AE5810412190B08106A386 /* InfoPlist.xcstrings */; };
+		4DC4AD2742D7845B11A9BAF8 /* SetupWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364418BC732EAFB243A6276F /* SetupWizardView.swift */; };
+		602CCAACAC90808D29DA2181 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1370275B6CC36DAB7A21FDC2 /* main.swift */; };
+		853707BD94F1CD0C678C08E1 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51ED8D160C7905FB5326B9F7 /* SettingsManager.swift */; };
+		8CF2E7FA5877571E4C2C3C8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 382B0BA12CC08F3E90CE0347 /* Assets.xcassets */; };
+		A4B6D5EAB517D0AEC3CF0C22 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4FF6CEB30DBBF206565D2 /* SettingsView.swift */; };
+		AA0D0B7769B06E0DBB9DE416 /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6327C17D70111A72752A356 /* TranscriptionService.swift */; };
+		B0E6443390FD9CDEC60C8267 /* GongjeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0361D92784E3A41CBD21219 /* GongjeTests.swift */; };
+		BBCA5A3D79B7DB8E6E6081D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF762DCEB44700BDD6904FFB /* AppDelegate.swift */; };
+		BD12B6436EBE08A3BFDE093D /* HotkeyNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2105CA92F1FB455B1EEB0847 /* HotkeyNames.swift */; };
+		BF979F639E386F93939EEFCD /* TextOutputService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE2CA3D92484C6875BAE85E4 /* TextOutputService.swift */; };
+		C52A2173E886C36A5C787F05 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 25E8069FB54DF998C763DAF8 /* Localizable.xcstrings */; };
+		C5DE33A55FAAD043344A5A3A /* WhisperModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F941812FAFB179D396921C44 /* WhisperModel.swift */; };
+		D832680BF271D784CCEFEB43 /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92889699D70C964CB056D023 /* PermissionsView.swift */; };
+		DAD991E9304638008E2EBD49 /* GongjeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B84DD5A3415E1CFAEAA5C35 /* GongjeApp.swift */; };
+		DE36DF41AC89F9257E1E1D85 /* LLMModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA53AEF1AE22D2575843928 /* LLMModel.swift */; };
+		E0BFFC5922CF4C32808661FC /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E048970141A90B0DB9ED4 /* MenuBarView.swift */; };
+		EA3C443ABBC53721CD2AB846 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1348EE74C96E9B79B49FB180 /* WaveformView.swift */; };
+		F2B40A6C6195DBB19194A19A /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6C4F71B3359A6098A91294 /* LLMService.swift */; };
+		F81E1D1602CCAE79A0907C1B /* TranscriptionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9A6169478486421E04BA /* TranscriptionOverlayView.swift */; };
+		FC9D5DC6C8B7994BE7D211E9 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = B0A98EACB75744C94A4AE347 /* MLXLMCommon */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		425B90C09A1307CE1CA75AA9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A6B1C4645006C03325337EC6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0BB0FE7A7768963570A3C7D8;
+			remoteInfo = gongje;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyAnalyzer.swift; sourceTree = "<group>"; };
+		0AA53AEF1AE22D2575843928 /* LLMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMModel.swift; sourceTree = "<group>"; };
+		1348EE74C96E9B79B49FB180 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
+		1370275B6CC36DAB7A21FDC2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		171D06EA9C531C5F153951B6 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		1B84DD5A3415E1CFAEAA5C35 /* GongjeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GongjeApp.swift; sourceTree = "<group>"; };
+		1BDDD84836AB84FE5C7E37A6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		2105CA92F1FB455B1EEB0847 /* HotkeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyNames.swift; sourceTree = "<group>"; };
+		25E8069FB54DF998C763DAF8 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		359E4485AD15E7A5E7BDAEE7 /* gongje.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gongje.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		364418BC732EAFB243A6276F /* SetupWizardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupWizardView.swift; sourceTree = "<group>"; };
+		382B0BA12CC08F3E90CE0347 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3BA4FF6CEB30DBBF206565D2 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		488B9A6169478486421E04BA /* TranscriptionOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionOverlayView.swift; sourceTree = "<group>"; };
+		51ED8D160C7905FB5326B9F7 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		577BFA7C6BBF3165945B8C67 /* gongje.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = gongje.entitlements; sourceTree = "<group>"; };
+		64829CC94D825E2418AEC4DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		787C9A24CB39FDBFD66D236F /* Local.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Local.xcconfig; sourceTree = "<group>"; };
+		92889699D70C964CB056D023 /* PermissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
+		A0361D92784E3A41CBD21219 /* GongjeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GongjeTests.swift; sourceTree = "<group>"; };
+		AE6C4F71B3359A6098A91294 /* LLMService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMService.swift; sourceTree = "<group>"; };
+		B31933195E5FE26C8C71FE98 /* gongjeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gongjeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5AE5810412190B08106A386 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
+		BE2CA3D92484C6875BAE85E4 /* TextOutputService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextOutputService.swift; sourceTree = "<group>"; };
+		CD0E048970141A90B0DB9ED4 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		DF762DCEB44700BDD6904FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F3628216DF133D2A02265B0F /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		F6327C17D70111A72752A356 /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
+		F941812FAFB179D396921C44 /* WhisperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModel.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A8274603F4B83AC999066865 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				20CB89249C2AFA0731D3A074 /* WhisperKit in Frameworks */,
+				0DA811AA603F8AED3E5A0673 /* KeyboardShortcuts in Frameworks */,
+				253711BEAF2746C51AF5B369 /* MLXLLM in Frameworks */,
+				FC9D5DC6C8B7994BE7D211E9 /* MLXLMCommon in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1A1CCFA4B9B5E8C961ADE6F9 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				2105CA92F1FB455B1EEB0847 /* HotkeyNames.swift */,
+				51ED8D160C7905FB5326B9F7 /* SettingsManager.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		4A071B1E1A6A69890E76BF78 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				1BDDD84836AB84FE5C7E37A6 /* AppState.swift */,
+				0AA53AEF1AE22D2575843928 /* LLMModel.swift */,
+				F941812FAFB179D396921C44 /* WhisperModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		53B33A6EFFF6FAF3393B5550 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F3628216DF133D2A02265B0F /* AudioEngine.swift */,
+				0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */,
+				AE6C4F71B3359A6098A91294 /* LLMService.swift */,
+				171D06EA9C531C5F153951B6 /* ModelManager.swift */,
+				BE2CA3D92484C6875BAE85E4 /* TextOutputService.swift */,
+				F6327C17D70111A72752A356 /* TranscriptionService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		75C7D5E80C79A7D85D3DAA3C = {
+			isa = PBXGroup;
+			children = (
+				A8A456DD50651B8DCF0B4EE5 /* gongje */,
+				A84CC2661EDCD8A6AF92ED0F /* gongje */,
+				F4A225F1C8D2A007C695C54C /* gongjeTests */,
+				E376805A31D87C9D39520A54 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A84CC2661EDCD8A6AF92ED0F /* gongje */ = {
+			isa = PBXGroup;
+			children = (
+				787C9A24CB39FDBFD66D236F /* Local.xcconfig */,
+			);
+			name = gongje;
+			path = .;
+			sourceTree = "<group>";
+		};
+		A8A456DD50651B8DCF0B4EE5 /* gongje */ = {
+			isa = PBXGroup;
+			children = (
+				DEDEAD3E130693055EB61495 /* App */,
+				4A071B1E1A6A69890E76BF78 /* Models */,
+				FFAFCE631E8640BFBD0C57F0 /* Resources */,
+				53B33A6EFFF6FAF3393B5550 /* Services */,
+				1A1CCFA4B9B5E8C961ADE6F9 /* Settings */,
+				F71B62B689B05383371C2C8B /* UI */,
+			);
+			path = gongje;
+			sourceTree = "<group>";
+		};
+		DEDEAD3E130693055EB61495 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				DF762DCEB44700BDD6904FFB /* AppDelegate.swift */,
+				1B84DD5A3415E1CFAEAA5C35 /* GongjeApp.swift */,
+				1370275B6CC36DAB7A21FDC2 /* main.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E376805A31D87C9D39520A54 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				359E4485AD15E7A5E7BDAEE7 /* gongje.app */,
+				B31933195E5FE26C8C71FE98 /* gongjeTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4A225F1C8D2A007C695C54C /* gongjeTests */ = {
+			isa = PBXGroup;
+			children = (
+				A0361D92784E3A41CBD21219 /* GongjeTests.swift */,
+			);
+			path = gongjeTests;
+			sourceTree = "<group>";
+		};
+		F71B62B689B05383371C2C8B /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				CD0E048970141A90B0DB9ED4 /* MenuBarView.swift */,
+				92889699D70C964CB056D023 /* PermissionsView.swift */,
+				3BA4FF6CEB30DBBF206565D2 /* SettingsView.swift */,
+				364418BC732EAFB243A6276F /* SetupWizardView.swift */,
+				488B9A6169478486421E04BA /* TranscriptionOverlayView.swift */,
+				1348EE74C96E9B79B49FB180 /* WaveformView.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		FFAFCE631E8640BFBD0C57F0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				382B0BA12CC08F3E90CE0347 /* Assets.xcassets */,
+				577BFA7C6BBF3165945B8C67 /* gongje.entitlements */,
+				64829CC94D825E2418AEC4DE /* Info.plist */,
+				B5AE5810412190B08106A386 /* InfoPlist.xcstrings */,
+				25E8069FB54DF998C763DAF8 /* Localizable.xcstrings */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0BB0FE7A7768963570A3C7D8 /* gongje */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89797E2F3148A9E6F62D4C30 /* Build configuration list for PBXNativeTarget "gongje" */;
+			buildPhases = (
+				AB86DD7A6B7AF4127A941001 /* Sources */,
+				7F30035463D025F86BA83918 /* Resources */,
+				A8274603F4B83AC999066865 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = gongje;
+			packageProductDependencies = (
+				2CA35FFB0B3586F9B9EDA40B /* WhisperKit */,
+				1785D82BC0100FB9B53319F1 /* KeyboardShortcuts */,
+				0FE4ED6640CA3B04028DD3D3 /* MLXLLM */,
+				B0A98EACB75744C94A4AE347 /* MLXLMCommon */,
+			);
+			productName = gongje;
+			productReference = 359E4485AD15E7A5E7BDAEE7 /* gongje.app */;
+			productType = "com.apple.product-type.application";
+		};
+		158D0023C72657C4B3219DE0 /* gongjeTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2131104C687117BA052DE0D0 /* Build configuration list for PBXNativeTarget "gongjeTests" */;
+			buildPhases = (
+				7F9929F0AFC41A1F7FB17654 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E4BF577285331A8456535BA /* PBXTargetDependency */,
+			);
+			name = gongjeTests;
+			packageProductDependencies = (
+			);
+			productName = gongjeTests;
+			productReference = B31933195E5FE26C8C71FE98 /* gongjeTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A6B1C4645006C03325337EC6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					0BB0FE7A7768963570A3C7D8 = {
+						DevelopmentTeam = 29PP64E2YN;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 4C65714276B6395D3D31F206 /* Build configuration list for PBXProject "gongje" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+				"zh-Hant-HK",
+				"zh-Hant-TW",
+			);
+			mainGroup = 75C7D5E80C79A7D85D3DAA3C;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				B554FCCA79184EF8463F875E /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				4F04B1438BF393EB567EF7EE /* XCRemoteSwiftPackageReference "WhisperKit" */,
+				477E08925F9388534A1D1BCE /* XCRemoteSwiftPackageReference "mlx-swift-lm" */,
+			);
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0BB0FE7A7768963570A3C7D8 /* gongje */,
+				158D0023C72657C4B3219DE0 /* gongjeTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7F30035463D025F86BA83918 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8CF2E7FA5877571E4C2C3C8C /* Assets.xcassets in Resources */,
+				4D3A31D57B6D40DA6141C793 /* InfoPlist.xcstrings in Resources */,
+				C52A2173E886C36A5C787F05 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7F9929F0AFC41A1F7FB17654 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0E6443390FD9CDEC60C8267 /* GongjeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB86DD7A6B7AF4127A941001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BBCA5A3D79B7DB8E6E6081D8 /* AppDelegate.swift in Sources */,
+				4AB7FB92CEB2D6F668162481 /* AppState.swift in Sources */,
+				392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */,
+				43BFA531B670B80FB469EFC4 /* FrequencyAnalyzer.swift in Sources */,
+				DAD991E9304638008E2EBD49 /* GongjeApp.swift in Sources */,
+				BD12B6436EBE08A3BFDE093D /* HotkeyNames.swift in Sources */,
+				DE36DF41AC89F9257E1E1D85 /* LLMModel.swift in Sources */,
+				F2B40A6C6195DBB19194A19A /* LLMService.swift in Sources */,
+				E0BFFC5922CF4C32808661FC /* MenuBarView.swift in Sources */,
+				19DE6D83FE6C953839DBD9FC /* ModelManager.swift in Sources */,
+				D832680BF271D784CCEFEB43 /* PermissionsView.swift in Sources */,
+				853707BD94F1CD0C678C08E1 /* SettingsManager.swift in Sources */,
+				A4B6D5EAB517D0AEC3CF0C22 /* SettingsView.swift in Sources */,
+				4DC4AD2742D7845B11A9BAF8 /* SetupWizardView.swift in Sources */,
+				BF979F639E386F93939EEFCD /* TextOutputService.swift in Sources */,
+				F81E1D1602CCAE79A0907C1B /* TranscriptionOverlayView.swift in Sources */,
+				AA0D0B7769B06E0DBB9DE416 /* TranscriptionService.swift in Sources */,
+				EA3C443ABBC53721CD2AB846 /* WaveformView.swift in Sources */,
+				C5DE33A55FAAD043344A5A3A /* WhisperModel.swift in Sources */,
+				602CCAACAC90808D29DA2181 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2E4BF577285331A8456535BA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0BB0FE7A7768963570A3C7D8 /* gongje */;
+			targetProxy = 425B90C09A1307CE1CA75AA9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		58540BF0CE9EFF3943196B36 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 787C9A24CB39FDBFD66D236F /* Local.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = gongje/Resources/gongje.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = gongje/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		6AC4EF6D72319580AD177F89 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		6DF6D2A886A0007CFCA2B4FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.akito.gongjeTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gongje.app/Contents/MacOS/gongje";
+			};
+			name = Debug;
+		};
+		7B1ACBEEF0B8A3F645E9A235 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		BA75234673312838BCA8A0E2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.akito.gongjeTests;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gongje.app/Contents/MacOS/gongje";
+			};
+			name = Release;
+		};
+		DA027DB6605EFF8806B31E18 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 787C9A24CB39FDBFD66D236F /* Local.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = gongje/Resources/gongje.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = gongje/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2131104C687117BA052DE0D0 /* Build configuration list for PBXNativeTarget "gongjeTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6DF6D2A886A0007CFCA2B4FB /* Debug */,
+				BA75234673312838BCA8A0E2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		4C65714276B6395D3D31F206 /* Build configuration list for PBXProject "gongje" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6AC4EF6D72319580AD177F89 /* Debug */,
+				7B1ACBEEF0B8A3F645E9A235 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		89797E2F3148A9E6F62D4C30 /* Build configuration list for PBXNativeTarget "gongje" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA027DB6605EFF8806B31E18 /* Debug */,
+				58540BF0CE9EFF3943196B36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		477E08925F9388534A1D1BCE /* XCRemoteSwiftPackageReference "mlx-swift-lm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ml-explore/mlx-swift-lm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.30.0;
+			};
+		};
+		4F04B1438BF393EB567EF7EE /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.12.0;
+			};
+		};
+		B554FCCA79184EF8463F875E /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0FE4ED6640CA3B04028DD3D3 /* MLXLLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 477E08925F9388534A1D1BCE /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXLLM;
+		};
+		1785D82BC0100FB9B53319F1 /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B554FCCA79184EF8463F875E /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+		2CA35FFB0B3586F9B9EDA40B /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4F04B1438BF393EB567EF7EE /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
+		};
+		B0A98EACB75744C94A4AE347 /* MLXLMCommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 477E08925F9388534A1D1BCE /* XCRemoteSwiftPackageReference "mlx-swift-lm" */;
+			productName = MLXLMCommon;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = A6B1C4645006C03325337EC6 /* Project object */;
+}

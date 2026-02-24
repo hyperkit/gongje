@@ -1,0 +1,53 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSAccessibilityUsageDescription" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Gongje needs Accessibility access to type transcribed text into applications."
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「講嘢」需要「輔助使用」權限嚟將轉錄嘅文字打入應用程式度。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「講嘢」需要「輔助使用」權限來將轉錄的文字輸入到應用程式中。"
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription" : {
+      "comment" : "Privacy - Microphone Usage Description",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Gongje needs microphone access to transcribe your Cantonese speech."
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「講嘢」需要咪高峰權限嚟轉錄你嘅廣東話語音。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「講嘢」需要麥克風權限來轉錄您的粵語語音。"
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}
