@@ -14,6 +14,7 @@ Press a hotkey, speak Cantonese, and the transcribed text is typed into whicheve
 - **Audio cues** — Distinct sounds on recording start and stop so you know when the mic is ready.
 - **Menu bar app** — Lives in the menu bar, out of the way. No Dock icon.
 - **Floating overlay** — Shows real-time transcription progress in a small floating panel. Raw text in gray, LLM-corrected text in white.
+- **Noise reduction** — Lightweight audio noise suppression (high-pass filter + spectral gating) via Accelerate/vDSP. Removes low-frequency rumble, AC hum, and ambient noise before transcription. Configurable strength, enabled by default.
 - **Waveform visualizer** — Frequency spectrum bars behind the overlay, driven by real-time FFT on speech frequencies. Toggleable in Settings (default off on 8GB machines).
 - **Configurable hotkey** — Default `Option-Space`, fully remappable.
 - **Multiple model sizes** — From Small (~500 MB) to Large V3 (~3 GB). Auto-recommends based on your Mac's RAM.
