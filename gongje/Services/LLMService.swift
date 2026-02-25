@@ -1,4 +1,5 @@
 import Foundation
+import Hub
 import MLXLMCommon
 import MLXLLM
 
@@ -25,10 +26,11 @@ actor LLMService {
             await MainActor.run { appState.llmLoadState = .loading }
             print("[Gongje] Loading local LLM from: \(localDir.path)")
             loaded = try await loadModelContainer(directory: localDir)
-        } else if let hfID = model.huggingFaceID {
-            // Download from HuggingFace, then move to our shared folder
+        } else if let hfID = model.modelRepo {
+            // Download from HuggingFace into the shared download base
             await MainActor.run { appState.llmLoadState = .downloading(progress: 0) }
-            loaded = try await loadModelContainer(id: hfID) { [weak self] progress in
+            let hub = HubApi(downloadBase: base)
+            loaded = try await loadModelContainer(hub: hub, id: hfID) { [weak self] progress in
                 guard let self else { return }
                 let fraction = progress.fractionCompleted
                 Task { @MainActor in
@@ -36,8 +38,7 @@ actor LLMService {
                 }
             }
         } else {
-            let llmDir = base.appending(path: "models").appending(path: model.localDirectoryName)
-            throw LLMError.modelNotFound(model.displayName, expectedPath: llmDir.path)
+            throw LLMError.modelNotFound(model.displayName, expectedPath: "")
         }
 
         container = loaded
@@ -89,29 +90,23 @@ actor LLMService {
     // MARK: - Defaults (exposed for SettingsManager)
 
     static let defaultSystemPrompt = """
-        你係一個廣東話文字校正助手。你嘅任務係修正語音轉文字嘅錯誤。
+        修正廣東話語音轉文字嘅同音錯字。
 
         規則：
-        1. 修正同音錯字（以下只係例子，唔係固定替換表）：例如「果個」->「嗰個」、「系」->「係」、「觀送」->「觀眾」、「首路」->「首腦」。
-        2. 保持廣東話用字，保持繁體字，唔好轉做普通話（例如保留「嘅」唔好改做「的」）。
-        3. 只輸出修正後嘅文字，唔好加任何解釋，不準翻譯。
-        4. 保留原文格式：唔好改標點、換行、數字、英文、專有名詞寫法（例如 7:30pm、MTR、OK 原樣保留）。
-        5. 採用最小改動原則：只修正明顯錯字；唔確定就保留原文。
-        6. 盡量保持輸入與輸出字數一致；如無法完全一致，以語義正確同格式保留優先。
+        1. 只改同音/近音錯字，唔確定就保留原文。
+        2. 保持廣東話繁體字，唔好轉普通話（保留「嘅」唔好改做「的」）。
+        3. 保留標點、換行、數字、英文、專有名詞原樣不變。
+        4. 保持字數一致，只輸出修正後文字，無需解釋。
 
-        例子：
-        1. 香港自開化後 世界各國人士分支疊來 市場繁榮 百貨充電 -> 香港自開埠後 世界各國人士紛至沓來 市場繁榮 百貨充闐
-        2. 不過而家要揾到一部打掃電話嘅電話題 -> 不過而家要揾到一部打到電話嘅電話亭
-        3. 等同佢喺銅鑼灣嗰度嗌大縣又落咗羊 -> 等同佢喺銅鑼灣嗰度嗌大丸有落一樣
-
-        你必須嚴格遵守以上規則，只輸出修正後嘅文字。
+        例：
+        香港自開化後 世界各國人士分支疊來 市場繁榮 百貨充電 -> 香港自開埠後 世界各國人士紛至沓來 市場繁榮 百貨充闐
+        不過而家要揾到一部打掃電話嘅電話題 -> 不過而家要揾到一部打到電話嘅電話亭
         """
 
     static let defaultUserPromptTemplate = """
-        以下係待校正文本。只輸出校正後文本，不要加任何說明。
-        [BEGIN]
+        [TEXT]
         {text}
-        [END]
+        [/TEXT]
         """
 
     // MARK: - Private

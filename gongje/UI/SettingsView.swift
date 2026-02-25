@@ -294,7 +294,7 @@ private struct ModelSettingsView: View {
                 }
 
                 VStack(alignment: .leading, spacing: 6) {
-                    Text(appState.selectedLLMModel.huggingFaceID ?? appState.selectedLLMModel.rawValue)
+                    Text(appState.selectedLLMModel.originalModelRepo ?? appState.selectedLLMModel.modelRepo ?? "")
                         .font(.headline)
                         .foregroundStyle(.primary)
                         .lineLimit(1)
@@ -311,10 +311,6 @@ private struct ModelSettingsView: View {
                             }
                             .buttonStyle(.bordered)
                         }
-                    } else {
-                        Text("This model is local-only.")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

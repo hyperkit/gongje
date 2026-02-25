@@ -1,10 +1,10 @@
 import Foundation
 
 enum LLMModel: String, CaseIterable, Identifiable, Codable {
-    case qwen25_05b = "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
-    case qwen25_15b = "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
-    case qwen25_3b = "mlx-community/Qwen2.5-3B-Instruct-4bit"
-    case qwen2Cantonese7b = "local:Qwen2-Cantonese-7B-Instruct-mlx-4bit"
+    case qwen25_05b = "mlx-community_Qwen2.5-0.5B-Instruct-4bit"
+    case qwen25_15b = "mlx-community_Qwen2.5-1.5B-Instruct-4bit"
+    case qwen25_3b = "mlx-community_Qwen2.5-3B-Instruct-4bit"
+    case qwen2Cantonese7b = "hyperkit_Qwen2-Cantonese-7B-Instruct-mlx"
 
     var id: String { rawValue }
 
@@ -26,13 +26,14 @@ enum LLMModel: String, CaseIterable, Identifiable, Codable {
         case .qwen25_3b:
             return String(localized: "Stronger correction quality with higher memory cost.")
         case .qwen2Cantonese7b:
-            return String(localized: "Best Cantonese-focused correction quality, requires local files.")
+            return String(localized: "Best Cantonese-focused correction quality.")
         }
     }
 
     var huggingFaceURL: URL? {
-        guard let id = huggingFaceID else { return nil }
-        return URL(string: "https://huggingface.co/\(id)")
+        let repo = originalModelRepo ?? modelRepo
+        guard let repo else { return nil }
+        return URL(string: "https://huggingface.co/\(repo)")
     }
 
     var minimumRAMGB: Int {
@@ -44,26 +45,31 @@ enum LLMModel: String, CaseIterable, Identifiable, Codable {
         }
     }
 
-    /// The HuggingFace model ID for remote models. `nil` for local-only models.
-    var huggingFaceID: String? {
+    /// The HuggingFace repo containing the MLX model for downloading.
+    var modelRepo: String? {
         switch self {
-        case .qwen2Cantonese7b: nil
-        default: rawValue
+        case .qwen25_05b: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+        case .qwen25_15b: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
+        case .qwen25_3b: "mlx-community/Qwen2.5-3B-Instruct-4bit"
+        case .qwen2Cantonese7b: "hyperkit/Qwen2-Cantonese-7B-Instruct-mlx"
         }
     }
 
-    /// The directory name used for local storage under the shared models folder.
-    var localDirectoryName: String {
+    /// The original upstream model repo before any MLX conversion.
+    var originalModelRepo: String? {
         switch self {
-        case .qwen2Cantonese7b: "Qwen2-Cantonese-7B-Instruct-mlx-4bit"
-        default: rawValue.replacingOccurrences(of: "/", with: "_")
+        case .qwen25_05b: "Qwen/Qwen2.5-0.5B-Instruct"
+        case .qwen25_15b: "Qwen/Qwen2.5-1.5B-Instruct"
+        case .qwen25_3b: "Qwen/Qwen2.5-3B-Instruct"
+        case .qwen2Cantonese7b: "lordjia/Qwen2-Cantonese-7B-Instruct"
         }
     }
 
     /// Resolve model directory under the shared download base.
-    /// For local-only models, checks if the model files exist there.
+    /// Uses the HubApi cache structure: `downloadBase/models/{org}/{repo}/`
     func resolveDirectory(base: URL) -> URL? {
-        let modelDir = base.appending(path: "models").appending(path: localDirectoryName)
+        guard let repo = modelRepo else { return nil }
+        let modelDir = base.appending(path: "models").appending(path: repo)
         let fm = FileManager.default
         if fm.fileExists(atPath: modelDir.appending(path: "config.json").path) {
             return modelDir

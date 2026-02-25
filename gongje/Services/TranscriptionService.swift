@@ -74,6 +74,7 @@ actor TranscriptionService {
 
         let config = WhisperKitConfig(
             model: model.rawValue,
+            downloadBase: Self.downloadBase,
             modelFolder: modelFolder.path,
             verbose: true,
             prewarm: true,
@@ -327,7 +328,7 @@ actor TranscriptionService {
         // Model-specific hallucination phrases (exact match)
         if let model = currentModel {
             for pattern in model.hallucinationPatterns {
-                if lowered == pattern.lowercased() {
+                if lowered.contains(pattern.lowercased()) {
                     return false
                 }
             }

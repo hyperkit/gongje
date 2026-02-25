@@ -2231,6 +2231,7 @@
       }
     },
     "This model is local-only." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
