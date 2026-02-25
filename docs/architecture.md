@@ -38,6 +38,8 @@ Gongje is a macOS menu bar app that performs on-device Cantonese speech-to-text 
           │ (actor)                 │
           │ ├ WhisperKit            │
           │ ├ AudioStreamTranscriber│
+          │ ├ NoiseSuppressing-     │
+          │ │  AudioProcessor       │
           │ ├ VAD flush + deferred  │
           │ └ Hallucination filter  │
           └──────┬──────────────────┘
@@ -120,6 +122,12 @@ Each model knows its HuggingFace ID (nil for local-only), display name, short de
 
 **`FrequencyAnalyzer.swift`** — Performs FFT via Accelerate/vDSP on raw audio samples to produce frequency band magnitudes for the waveform visualizer. Analyzes the speech range (85–4000 Hz) with logarithmic band spacing, using a fixed dB noise floor to suppress background noise from close mics like AirPods.
 
+**`NoiseSuppressingAudioProcessor.swift`** — Conforms to `AudioProcessing` and wraps the real audio processor to apply noise reduction before audio reaches the transcriber. Applies two filters using Apple's Accelerate framework (vDSP):
+1. **High-pass biquad filter** (85 Hz cutoff via `vDSP_deq22`) — removes low-frequency rumble, handling noise, and AC hum
+2. **Spectral gating** (vDSP FFT/IFFT) — learns a noise profile from the first ~500ms of audio, then attenuates frequency bins dominated by noise with soft attenuation to avoid artifacts
+
+Both operations run on the AMX coprocessor on Apple Silicon at near-zero CPU/GPU cost. The wrapper intercepts raw audio buffers via the callback from the real processor, filters them, and maintains its own `audioSamples` array. Gating aggressiveness is controlled by `SettingsManager.noiseReductionStrength`. Enabled by default; can be toggled in Advanced Settings.
+
 **`AudioEngine.swift`** — Thin wrapper around `AudioProcessor.requestRecordPermission()`. Audio capture is handled internally by `AudioStreamTranscriber`.
 
 ### UI
@@ -162,7 +170,7 @@ Each model knows its HuggingFace ID (nil for local-only), display name, short de
 
 **`HotkeyNames.swift`** — Declares `KeyboardShortcuts.Name.toggleRecording` with default `Option-Space`.
 
-**`SettingsManager.swift`** — UserDefaults-backed preferences for overlay visibility, clipboard preservation, and selected model.
+**`SettingsManager.swift`** — UserDefaults-backed preferences for overlay visibility, clipboard preservation, selected model, noise reduction settings, and Whisper/LLM advanced parameters.
 
 ## Data Flow
 
@@ -203,8 +211,9 @@ User presses Option-Space
           → If LLM enabled and not loaded: loadLLMModel() (background)
         → TranscriptionService.startStreaming()
           → Play "Pop" sound + 150ms delay
+          → If noise reduction enabled: wrap AudioProcessor in NoiseSuppressingAudioProcessor
           → AudioStreamTranscriber.startStreamTranscription()
-            → Microphone capture + VAD + Whisper inference
+            → Microphone capture → noise filter → VAD + Whisper inference
 
 AudioStreamTranscriber state callback (continuous)
   → handleStateChange()
@@ -297,6 +306,10 @@ Some users run Windows applications via Crossover/Wine on macOS. These apps resp
 ### Why a setup wizard?
 
 Without onboarding, new users see a menu bar icon appear, permissions get requested without explanation, and a large model download begins immediately. The 6-step wizard guides users through permissions, model selection, optional LLM setup, and hotkey configuration with context about why each step is needed. Setup state is persisted via `@AppStorage("setupCompleted")` so the wizard only appears once. A "Run Setup Wizard..." button in Settings allows re-running it.
+
+### Why vDSP-based noise reduction instead of a neural model?
+
+The app already runs Whisper (CoreML) and optionally an LLM (MLX) simultaneously, leaving limited headroom on 8 GB machines. A neural noise suppression model (e.g., RNNoise, DTLN) would add GPU/CPU load and memory. Instead, the high-pass biquad filter and spectral gating approach uses Apple's Accelerate framework (vDSP), which executes on the dedicated AMX coprocessor on Apple Silicon — effectively zero CPU/GPU cost. The spectral gating learns a noise profile from the first ~500ms of silence, then attenuates noise-dominated frequency bins with configurable aggressiveness. This handles common environmental noise (fans, AC, keyboard, ambient chatter) well enough for Whisper's robustness, without competing for compute resources.
 
 ### Why Local.xcconfig for signing?
 

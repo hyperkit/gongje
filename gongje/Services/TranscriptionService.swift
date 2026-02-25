@@ -17,6 +17,7 @@ actor TranscriptionService {
     private let appState: AppState
     private let llmService: LLMService?
     private let frequencyAnalyzer = FrequencyAnalyzer()
+    private var activeAudioProcessor: (any AudioProcessing)?
 
     init(appState: AppState, llmService: LLMService? = nil) {
         self.appState = appState
@@ -176,13 +177,21 @@ actor TranscriptionService {
             chunkingStrategy: .vad
         )
 
+        let processor: any AudioProcessing
+        if SettingsManager.noiseReductionEnabled {
+            processor = NoiseSuppressingAudioProcessor(wrapping: whisperKit.audioProcessor)
+        } else {
+            processor = whisperKit.audioProcessor
+        }
+        activeAudioProcessor = processor
+
         let transcriber = AudioStreamTranscriber(
             audioEncoder: whisperKit.audioEncoder,
             featureExtractor: whisperKit.featureExtractor,
             segmentSeeker: whisperKit.segmentSeeker,
             textDecoder: whisperKit.textDecoder,
             tokenizer: tokenizer,
-            audioProcessor: whisperKit.audioProcessor,
+            audioProcessor: processor,
             decodingOptions: options,
             requiredSegmentsForConfirmation: SettingsManager.whisperRequiredSegments,
             silenceThreshold: Float(SettingsManager.whisperSilenceThreshold),
@@ -210,6 +219,7 @@ actor TranscriptionService {
 
         await streamTranscriber?.stopStreamTranscription()
         streamTranscriber = nil
+        activeAudioProcessor = nil
 
         // Combine any deferred text with current pending text
         var allPending = deferredFlushText
@@ -338,8 +348,8 @@ actor TranscriptionService {
     }
 
     private func handleStateChange(newState: AudioStreamTranscriber.State) {
-        // Compute frequency spectrum from raw audio for visualizer
-        if let audioProcessor = whisperKit?.audioProcessor {
+        // Compute frequency spectrum from audio for visualizer
+        if let audioProcessor = activeAudioProcessor ?? whisperKit?.audioProcessor {
             let bands = frequencyAnalyzer.analyze(audioProcessor.audioSamples)
             Task { @MainActor in
                 appState.audioEnergy = bands

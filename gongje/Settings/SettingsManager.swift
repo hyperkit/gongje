@@ -23,6 +23,10 @@ struct SettingsManager {
     @AppStorage("llmSystemPrompt")         static var llmSystemPrompt: String = LLMService.defaultSystemPrompt
     @AppStorage("llmUserPromptTemplate")   static var llmUserPromptTemplate: String = LLMService.defaultUserPromptTemplate
 
+    // Noise Reduction
+    @AppStorage("noiseReductionEnabled")  static var noiseReductionEnabled: Bool = true
+    @AppStorage("noiseReductionStrength") static var noiseReductionStrength: Double = 0.5
+
     // Whisper Decoding
     @AppStorage("whisperLanguage")                       static var whisperLanguage: String = "yue"
     @AppStorage("whisperTemperature")                    static var whisperTemperature: Double = 0.0

@@ -13,6 +13,10 @@ struct AdvancedSettingsView: View {
     @AppStorage("llmSystemPrompt")          private var llmSystemPrompt: String = LLMService.defaultSystemPrompt
     @AppStorage("llmUserPromptTemplate")    private var llmUserPromptTemplate: String = LLMService.defaultUserPromptTemplate
 
+    // Noise Reduction
+    @AppStorage("noiseReductionEnabled")  private var noiseReductionEnabled: Bool = true
+    @AppStorage("noiseReductionStrength") private var noiseReductionStrength: Double = 0.5
+
     // Whisper Decoding
     @AppStorage("whisperLanguage")                   private var whisperLanguage: String = "yue"
     @AppStorage("whisperTemperature")                private var whisperTemperature: Double = 0.0
@@ -29,6 +33,7 @@ struct AdvancedSettingsView: View {
 
     var body: some View {
         Form {
+            noiseReductionSection
             whisperDecodingSection
             whisperStreamingSection
             llmGenerationSection
@@ -122,6 +127,20 @@ struct AdvancedSettingsView: View {
             } label: {
                 Text("User Prompt Template")
             }
+        }
+    }
+
+    @ViewBuilder
+    private var noiseReductionSection: some View {
+        Section("Noise Reduction") {
+            Toggle("Enable Noise Reduction", isOn: $noiseReductionEnabled)
+            doubleRow(
+                title: "Reduction Strength",
+                caption: "How aggressively background noise is suppressed. Takes effect on next recording.",
+                value: $noiseReductionStrength,
+                range: 0...1, step: 0.05, format: "%.2f"
+            )
+            .disabled(!noiseReductionEnabled)
         }
     }
 
@@ -268,6 +287,8 @@ struct AdvancedSettingsView: View {
     // MARK: - Reset
 
     private func resetToDefaults() {
+        noiseReductionEnabled = true
+        noiseReductionStrength = 0.5
         llmTemperature = 0.0
         llmTopP = 1.0
         llmRepetitionPenalty = 1.0

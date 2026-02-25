@@ -13,6 +13,7 @@
 		253711BEAF2746C51AF5B369 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE4ED6640CA3B04028DD3D3 /* MLXLLM */; };
 		392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3628216DF133D2A02265B0F /* AudioEngine.swift */; };
 		43BFA531B670B80FB469EFC4 /* FrequencyAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */; };
+		D1A2B3C4E5F60718293A4B5C /* NoiseSuppressingAudioProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */; };
 		4AB7FB92CEB2D6F668162481 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BDDD84836AB84FE5C7E37A6 /* AppState.swift */; };
 		4D3A31D57B6D40DA6141C793 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B5AE5810412190B08106A386 /* InfoPlist.xcstrings */; };
 		4DC4AD2742D7845B11A9BAF8 /* SetupWizardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 364418BC732EAFB243A6276F /* SetupWizardView.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyAnalyzer.swift; sourceTree = "<group>"; };
+		E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoiseSuppressingAudioProcessor.swift; sourceTree = "<group>"; };
 		C3D4E5F6A7B8C90123456780 /* DockVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockVisibility.swift; sourceTree = "<group>"; };
 		0AA53AEF1AE22D2575843928 /* LLMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMModel.swift; sourceTree = "<group>"; };
 		1348EE74C96E9B79B49FB180 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */,
 				AE6C4F71B3359A6098A91294 /* LLMService.swift */,
 				171D06EA9C531C5F153951B6 /* ModelManager.swift */,
+				E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */,
 				BE2CA3D92484C6875BAE85E4 /* TextOutputService.swift */,
 				F6327C17D70111A72752A356 /* TranscriptionService.swift */,
 			);
@@ -331,6 +334,7 @@
 				4AB7FB92CEB2D6F668162481 /* AppState.swift in Sources */,
 				392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */,
 				43BFA531B670B80FB469EFC4 /* FrequencyAnalyzer.swift in Sources */,
+				D1A2B3C4E5F60718293A4B5C /* NoiseSuppressingAudioProcessor.swift in Sources */,
 				F1A2B3C4D5E6F70812345679 /* DockVisibility.swift in Sources */,
 				DAD991E9304638008E2EBD49 /* GongjeApp.swift in Sources */,
 				BD12B6436EBE08A3BFDE093D /* HotkeyNames.swift in Sources */,
