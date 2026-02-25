@@ -41,7 +41,6 @@ struct MenuBarView: View {
 
             Button("Settings...") {
                 openSettings()
-                NSApp.activate(ignoringOtherApps: true)
             }
             .keyboardShortcut(",", modifiers: .command)
 

@@ -28,6 +28,7 @@ struct GongjeApp: App {
         Settings {
             SettingsView()
                 .environment(appState)
+                .showInDock()
         }
 
         Window("Setup", id: "setup") {
@@ -36,6 +37,7 @@ struct GongjeApp: App {
                 didConfigure = true
             }
             .environment(appState)
+            .showInDock()
         }
         .windowResizability(.contentSize)
         .defaultPosition(.center)

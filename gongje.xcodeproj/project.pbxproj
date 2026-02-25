@@ -33,6 +33,7 @@
 		DE36DF41AC89F9257E1E1D85 /* LLMModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA53AEF1AE22D2575843928 /* LLMModel.swift */; };
 		E0BFFC5922CF4C32808661FC /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD0E048970141A90B0DB9ED4 /* MenuBarView.swift */; };
 		EA3C443ABBC53721CD2AB846 /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1348EE74C96E9B79B49FB180 /* WaveformView.swift */; };
+		F1A2B3C4D5E6F70812345679 /* DockVisibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D4E5F6A7B8C90123456780 /* DockVisibility.swift */; };
 		F2B40A6C6195DBB19194A19A /* LLMService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE6C4F71B3359A6098A91294 /* LLMService.swift */; };
 		F81E1D1602CCAE79A0907C1B /* TranscriptionOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 488B9A6169478486421E04BA /* TranscriptionOverlayView.swift */; };
 		FC9D5DC6C8B7994BE7D211E9 /* MLXLMCommon in Frameworks */ = {isa = PBXBuildFile; productRef = B0A98EACB75744C94A4AE347 /* MLXLMCommon */; };
@@ -50,6 +51,7 @@
 
 /* Begin PBXFileReference section */
 		0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrequencyAnalyzer.swift; sourceTree = "<group>"; };
+		C3D4E5F6A7B8C90123456780 /* DockVisibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DockVisibility.swift; sourceTree = "<group>"; };
 		0AA53AEF1AE22D2575843928 /* LLMModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LLMModel.swift; sourceTree = "<group>"; };
 		1348EE74C96E9B79B49FB180 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		1370275B6CC36DAB7A21FDC2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 			isa = PBXGroup;
 			children = (
 				B2C3D4E5F6789012345678A1 /* AdvancedSettingsView.swift */,
+				C3D4E5F6A7B8C90123456780 /* DockVisibility.swift */,
 				CD0E048970141A90B0DB9ED4 /* MenuBarView.swift */,
 				92889699D70C964CB056D023 /* PermissionsView.swift */,
 				3BA4FF6CEB30DBBF206565D2 /* SettingsView.swift */,
@@ -328,6 +331,7 @@
 				4AB7FB92CEB2D6F668162481 /* AppState.swift in Sources */,
 				392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */,
 				43BFA531B670B80FB469EFC4 /* FrequencyAnalyzer.swift in Sources */,
+				F1A2B3C4D5E6F70812345679 /* DockVisibility.swift in Sources */,
 				DAD991E9304638008E2EBD49 /* GongjeApp.swift in Sources */,
 				BD12B6436EBE08A3BFDE093D /* HotkeyNames.swift in Sources */,
 				DE36DF41AC89F9257E1E1D85 /* LLMModel.swift in Sources */,
