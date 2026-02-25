@@ -161,17 +161,17 @@ actor TranscriptionService {
 
         let options = DecodingOptions(
             task: .transcribe,
-            language: "yue",
-            temperature: 0.0,
+            language: SettingsManager.whisperLanguage,
+            temperature: Float(SettingsManager.whisperTemperature),
             temperatureFallbackCount: 0,
             usePrefillPrompt: false,
             skipSpecialTokens: true,
             withoutTimestamps: true,
             suppressBlank: false,
-            compressionRatioThreshold: 2.2,
-            logProbThreshold: -0.8,
-            firstTokenLogProbThreshold: -1.2,
-            noSpeechThreshold: 0.5,
+            compressionRatioThreshold: Float(SettingsManager.whisperCompressionRatioThreshold),
+            logProbThreshold: Float(SettingsManager.whisperLogProbThreshold),
+            firstTokenLogProbThreshold: Float(SettingsManager.whisperFirstTokenLogProbThreshold),
+            noSpeechThreshold: Float(SettingsManager.whisperNoSpeechThreshold),
             chunkingStrategy: .vad
         )
 
@@ -183,8 +183,8 @@ actor TranscriptionService {
             tokenizer: tokenizer,
             audioProcessor: whisperKit.audioProcessor,
             decodingOptions: options,
-            requiredSegmentsForConfirmation: 2,
-            silenceThreshold: 0.3,
+            requiredSegmentsForConfirmation: SettingsManager.whisperRequiredSegments,
+            silenceThreshold: Float(SettingsManager.whisperSilenceThreshold),
             compressionCheckWindow: 60,
             useVAD: true,
             stateChangeCallback: { [weak self] oldState, newState in

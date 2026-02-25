@@ -10,4 +10,28 @@ struct SettingsManager {
         get { WhisperModel(rawValue: selectedModelRaw) ?? .systemRecommended }
         set { selectedModelRaw = newValue.rawValue }
     }
+
+    // LLM Generation
+    @AppStorage("llmTemperature")          static var llmTemperature: Double = 0.0
+    @AppStorage("llmTopP")                 static var llmTopP: Double = 1.0
+    @AppStorage("llmRepetitionPenalty")    static var llmRepetitionPenalty: Double = 1.0
+    @AppStorage("llmMaxTokensCap")         static var llmMaxTokensCap: Int = 96
+    @AppStorage("llmMaxTokensBuffer")      static var llmMaxTokensBuffer: Int = 24
+    @AppStorage("llmDebounceMs")           static var llmDebounceMs: Int = 300
+
+    // Prompt Templates
+    @AppStorage("llmSystemPrompt")         static var llmSystemPrompt: String = LLMService.defaultSystemPrompt
+    @AppStorage("llmUserPromptTemplate")   static var llmUserPromptTemplate: String = LLMService.defaultUserPromptTemplate
+
+    // Whisper Decoding
+    @AppStorage("whisperLanguage")                       static var whisperLanguage: String = "yue"
+    @AppStorage("whisperTemperature")                    static var whisperTemperature: Double = 0.0
+    @AppStorage("whisperCompressionRatioThreshold")      static var whisperCompressionRatioThreshold: Double = 2.2
+    @AppStorage("whisperLogProbThreshold")               static var whisperLogProbThreshold: Double = -0.8
+    @AppStorage("whisperFirstTokenLogProbThreshold")     static var whisperFirstTokenLogProbThreshold: Double = -1.2
+    @AppStorage("whisperNoSpeechThreshold")              static var whisperNoSpeechThreshold: Double = 0.5
+
+    // Whisper Streaming
+    @AppStorage("whisperRequiredSegments") static var whisperRequiredSegments: Int = 2
+    @AppStorage("whisperSilenceThreshold") static var whisperSilenceThreshold: Double = 0.3
 }

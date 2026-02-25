@@ -16,8 +16,12 @@ struct SettingsView: View {
                 .tabItem {
                     Label("Permissions", systemImage: "lock.shield")
                 }
+            AdvancedSettingsView()
+                .tabItem {
+                    Label("Advanced", systemImage: "slider.horizontal.3")
+                }
         }
-        .frame(width: 640, height: 500)
+        .frame(width: 680, height: 560)
     }
 }
 

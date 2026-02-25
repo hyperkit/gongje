@@ -2,13 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleDevelopmentRegion</key>
-    <string>en</string>
-    <key>LSUIElement</key>
-    <true/>
-    <key>NSMicrophoneUsageDescription</key>
-    <string>Gongje needs microphone access to transcribe your Cantonese speech.</string>
-    <key>NSAccessibilityUsageDescription</key>
-    <string>Gongje needs Accessibility access to type transcribed text into applications.</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>LSUIElement</key>
+	<true/>
+	<key>NSAccessibilityUsageDescription</key>
+	<string>Gongje needs Accessibility access to type transcribed text into applications.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Gongje needs microphone access to transcribe your Cantonese speech.</string>
 </dict>
 </plist>
