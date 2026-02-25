@@ -1,32 +1,32 @@
 import Foundation
 
 enum LLMModel: String, CaseIterable, Identifiable, Codable {
-    case qwen25_05b = "mlx-community_Qwen2.5-0.5B-Instruct-4bit"
-    case qwen25_15b = "mlx-community_Qwen2.5-1.5B-Instruct-4bit"
-    case qwen25_3b = "mlx-community_Qwen2.5-3B-Instruct-4bit"
+    case qwen3_17b = "Qwen_Qwen3-1.7B-MLX-4bit"
+    case qwen3_4b = "Qwen_Qwen3-4B-MLX-4bit"
+    case qwen3_8b = "Qwen_Qwen3-8B-MLX-4bit"
     case qwen2Cantonese7b = "hyperkit_Qwen2-Cantonese-7B-Instruct-mlx"
 
     var id: String { rawValue }
 
     var displayName: String {
         switch self {
-        case .qwen25_05b: String(localized: "Qwen 2.5 0.5B (~400 MB)")
-        case .qwen25_15b: String(localized: "Qwen 2.5 1.5B (~870 MB)")
-        case .qwen25_3b: String(localized: "Qwen 2.5 3B (~1.8 GB)")
-        case .qwen2Cantonese7b: String(localized: "Cantonese 7B (~4 GB)")
+        case .qwen3_17b: String(localized: "Qwen 3 1.7B (~1.2 GB)")
+        case .qwen3_4b: String(localized: "Qwen 3 4B (~2.5 GB)")
+        case .qwen3_8b: String(localized: "Qwen 3 8B (~5 GB)")
+        case .qwen2Cantonese7b: String(localized: "Qwen 2 Cantonese 7B (~4 GB)")
         }
     }
 
     var shortDescription: String {
         switch self {
-        case .qwen25_05b:
-            return String(localized: "Lightweight and fastest; suitable for basic typo correction.")
-        case .qwen25_15b:
-            return String(localized: "Recommended balance of quality, speed, and memory usage.")
-        case .qwen25_3b:
-            return String(localized: "Stronger correction quality with higher memory cost.")
+        case .qwen3_17b:
+            return String(localized: "Generic Qwen 3 model which is lightweight and fastest; suitable for basic typo correction.")
+        case .qwen3_4b:
+            return String(localized: "Generic Qwen 3 model which has recommended balance of quality, speed, and memory usage.")
+        case .qwen3_8b:
+            return String(localized: "Generic Qwen 3 model which has stronger correction quality with higher memory cost.")
         case .qwen2Cantonese7b:
-            return String(localized: "Best Cantonese-focused correction quality.")
+            return String(localized: "Cantonese-focused Qwen 2 model which has stronger correction quality with higher memory cost.")
         }
     }
 
@@ -38,9 +38,9 @@ enum LLMModel: String, CaseIterable, Identifiable, Codable {
 
     var minimumRAMGB: Int {
         switch self {
-        case .qwen25_05b: 4
-        case .qwen25_15b: 8
-        case .qwen25_3b: 16
+        case .qwen3_17b: 4
+        case .qwen3_4b: 8
+        case .qwen3_8b: 16
         case .qwen2Cantonese7b: 16
         }
     }
@@ -48,9 +48,9 @@ enum LLMModel: String, CaseIterable, Identifiable, Codable {
     /// The HuggingFace repo containing the MLX model for downloading.
     var modelRepo: String? {
         switch self {
-        case .qwen25_05b: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
-        case .qwen25_15b: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
-        case .qwen25_3b: "mlx-community/Qwen2.5-3B-Instruct-4bit"
+        case .qwen3_17b: "Qwen/Qwen3-1.7B-MLX-4bit"
+        case .qwen3_4b: "Qwen/Qwen3-4B-MLX-4bit"
+        case .qwen3_8b: "Qwen/Qwen3-8B-MLX-4bit"
         case .qwen2Cantonese7b: "hyperkit/Qwen2-Cantonese-7B-Instruct-mlx"
         }
     }
@@ -58,9 +58,9 @@ enum LLMModel: String, CaseIterable, Identifiable, Codable {
     /// The original upstream model repo before any MLX conversion.
     var originalModelRepo: String? {
         switch self {
-        case .qwen25_05b: "Qwen/Qwen2.5-0.5B-Instruct"
-        case .qwen25_15b: "Qwen/Qwen2.5-1.5B-Instruct"
-        case .qwen25_3b: "Qwen/Qwen2.5-3B-Instruct"
+        case .qwen3_17b: "Qwen/Qwen3-1.7B"
+        case .qwen3_4b: "Qwen/Qwen3-4B"
+        case .qwen3_8b: "Qwen/Qwen3-8B"
         case .qwen2Cantonese7b: "lordjia/Qwen2-Cantonese-7B-Instruct"
         }
     }

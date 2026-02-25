@@ -59,7 +59,7 @@ final class AppState {
 
         llmEnabled = UserDefaults.standard.bool(forKey: "llmEnabled")
         let savedLLM = UserDefaults.standard.string(forKey: "selectedLLMModel")
-        selectedLLMModel = savedLLM.flatMap(LLMModel.init(rawValue:)) ?? .qwen25_15b
+        selectedLLMModel = savedLLM.flatMap(LLMModel.init(rawValue:)) ?? .qwen3_17b
     }
 
     func setTranscriptionService(_ service: TranscriptionService) {

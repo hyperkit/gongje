@@ -104,9 +104,10 @@ actor LLMService {
         """
 
     static let defaultUserPromptTemplate = """
-        [TEXT]
+        以下係待校正文本。只輸出校正後文本，不要加任何說明。
+        [BEGIN]
         {text}
-        [/TEXT]
+        [END]
         """
 
     // MARK: - Private
@@ -259,7 +260,7 @@ actor LLMService {
             return fallback
         }
         guard isReasonableCorrection(input: fallback, output: cleaned, sourceModel: sourceModel) else {
-            print("[Gongje] LLM output rejected: correction drift too large : \(output) vs \(fallback)")
+            print("[Gongje] LLM output rejected: correction drift too large : \(output) vs \(cleaned)")
             return fallback
         }
         return cleaned

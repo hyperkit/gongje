@@ -137,7 +137,7 @@ enum WhisperModel: String, CaseIterable, Identifiable, Codable {
         case .cantoneseLargeV3Turbo:
             patterns += [
                 "这种",
-                "优优独播剧场",
+                "优优独播",
                 "这些",
                 "这些人",
                 "在这",
