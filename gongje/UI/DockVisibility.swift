@@ -13,6 +13,7 @@ enum DockVisibility {
         visibleWindowCount += 1
         if visibleWindowCount == 1 {
             NSApp.setActivationPolicy(.regular)
+            NSApp.applicationIconImage = NSImage(named: "AppIcon")
             NSApp.activate(ignoringOtherApps: true)
         }
     }

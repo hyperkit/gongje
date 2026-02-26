@@ -1368,6 +1368,23 @@
         }
       }
     },
+    "Noise Reduction" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降噪"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "降噪"
+          }
+        }
+      }
+    },
     "Not granted — required for text injection" : {
       "localizations" : {
         "zh-Hant-HK" : {
