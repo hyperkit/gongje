@@ -1,0 +1,17 @@
+// Local build settings
+// Copy this file to Local.xcconfig and fill in your values:
+//   cp Local.xcconfig.template Local.xcconfig
+//
+// To find your DEVELOPMENT_TEAM, run:
+//   security find-identity -v -p codesigning | grep "Apple Development"
+// The 10-character ID in the OU field is your team ID.
+//
+// For ad-hoc signing (no Apple Developer account), use:
+//   DEVELOPMENT_TEAM =
+//   CODE_SIGN_IDENTITY = -
+//   CODE_SIGN_STYLE = Manual
+
+DEVELOPMENT_TEAM = YOUR_TEAM_ID
+CODE_SIGN_IDENTITY = Apple Development
+CODE_SIGN_STYLE = Automatic
+PRODUCT_BUNDLE_IDENTIFIER = com.yourname.gongje
