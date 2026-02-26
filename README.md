@@ -10,14 +10,13 @@ Press a hotkey, speak Cantonese, and the transcribed text is typed into whicheve
 - **LLM text correction** — Optional on-device LLM fixes homophone errors (同音錯字) and adds punctuation to Cantonese transcription. Runs locally via MLX Swift.
 - **Written Chinese & Spoken Cantonese models** — OpenAI Whisper models for standard written Chinese (書面語), plus community models fine-tuned for spoken Cantonese (口語).
 - **Setup wizard** — Guided 6-step first-launch setup for permissions, model download, LLM setup, and hotkey configuration.
-- **VAD-based auto-send** — Text is sent automatically when WhisperKit's voice activity detection detects silence. No manual timing needed.
-- **Audio cues** — Distinct sounds on recording start and stop so you know when the mic is ready.
-- **Menu bar app** — Lives in the menu bar, out of the way. No Dock icon.
+- **Audio cues** — Distinct sounds on recording start and stop so you know when the mic is active.
+- **Menu bar app** — Lives in the menu bar, out of the way. Dock icon appears only when Settings or Setup windows are open.
 - **Floating overlay** — Shows real-time transcription progress in a small floating panel. Raw text in gray, LLM-corrected text in white.
 - **Noise reduction** — Lightweight audio noise suppression (high-pass filter + spectral gating) via Accelerate/vDSP. Removes low-frequency rumble, AC hum, and ambient noise before transcription. Configurable strength, enabled by default.
-- **Waveform visualizer** — Frequency spectrum bars behind the overlay, driven by real-time FFT on speech frequencies. Toggleable in Settings (default off on 8GB machines).
+- **Waveform visualizer** — Frequency spectrum bars behind the overlay, driven by real-time FFT on speech frequencies. Toggleable in Settings (default off on 8 GB machines).
 - **Configurable hotkey** — Default `Option-Space`, fully remappable.
-- **Multiple model sizes** — From Small (~500 MB) to Large V3 (~3 GB). Auto-recommends based on your Mac's RAM.
+- **Multiple model sizes** — From Small (~500 MB) to Large V3 Turbo (~1.5 GB). Auto-recommends based on your Mac's RAM.
 - **Clipboard preservation** — Restores your clipboard after pasting transcribed text (configurable delay).
 - **Crossover/Wine support** — Optional Ctrl-V paste for Windows apps running under Crossover/Wine.
 
@@ -97,23 +96,20 @@ CODE_SIGN_STYLE = Manual
 
 ### How it works
 
-1. Press the hotkey — a "pop" sound confirms the mic is ready, the overlay shows "Listening..."
-2. Speak Cantonese — the overlay shows in-progress transcription
-3. Pause speaking — WhisperKit's VAD detects silence and the text is automatically pasted into the focused app
-4. Continue speaking — new text appears, repeat
-5. Press the hotkey again — a "pop" sound plays, any remaining text is pasted, and recording stops
+1. Press the hotkey — a "pop" sound confirms the mic is active, the overlay shows "Listening..."
+2. Speak Cantonese — the overlay shows in-progress transcription (gray for raw text, white for LLM-corrected)
+3. Press the hotkey again — a "pop" sound plays, the transcribed text is pasted into the focused app, and recording stops
 
 ## Project Structure
 
 ```
 gongje/
 ├── gongje/
-│   ├── App/                    # App entry point and delegate
+│   ├── App/                    # App entry point, delegate, language override
 │   ├── Models/                 # AppState, WhisperModel, LLMModel enums
-│   ├── Services/               # Audio, transcription, text output, LLM correction
+│   ├── Services/               # Audio, transcription, text output, LLM correction, noise reduction
 │   ├── Settings/               # Hotkey config, user preferences
-│   ├── UI/                     # Menu bar, overlay, settings, permissions, setup wizard
-│   └── Resources/              # Info.plist, entitlements, assets
+│   └── UI/                     # Menu bar, overlay, settings, permissions, setup wizard
 ├── gongjeTests/
 ├── docs/                       # Architecture and design documentation
 ├── project.yml                 # XcodeGen project spec
