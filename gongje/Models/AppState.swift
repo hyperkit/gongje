@@ -1,6 +1,21 @@
 import AppKit
+import AVFoundation
 import Foundation
 import SwiftUI
+
+enum SoundEffect {
+    private static let player: AVAudioPlayer? = {
+        let url = URL(filePath: "/System/Library/Sounds/Pop.aiff")
+        guard let player = try? AVAudioPlayer(contentsOf: url) else { return nil }
+        player.prepareToPlay()
+        return player
+    }()
+
+    static func playPop() {
+        player?.currentTime = 0
+        player?.play()
+    }
+}
 
 enum ModelLoadState: Equatable {
     case notLoaded
@@ -110,7 +125,7 @@ final class AppState {
         isRecording = false
         Task {
             await transcriptionService?.stopStreaming()
-            NSSound(named: "Pop")?.play()
+            SoundEffect.playPop()
         }
     }
 

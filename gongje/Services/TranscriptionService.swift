@@ -149,9 +149,7 @@ actor TranscriptionService {
             return
         }
 
-        // Play sound before audio hardware is reconfigured for recording.
-        await MainActor.run { NSSound(named: "Pop")?.play() }
-        try? await Task.sleep(for: .milliseconds(150))
+        await MainActor.run { SoundEffect.playPop() }
 
         injectedLength = 0
         fullText = ""
