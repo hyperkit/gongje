@@ -41,7 +41,6 @@ private struct GeneralSettingsView: View {
     @AppStorage("clipboardRestoreDelay") private var clipboardRestoreDelay = 300
     @Environment(\.openWindow) private var openWindow
     @AppStorage("appLanguageOverride") private var selectedLanguage: String = "system"
-    @State private var showRestartAlert = false
 
     var body: some View {
         Form {
@@ -59,11 +58,7 @@ private struct GeneralSettingsView: View {
                         UserDefaults.standard.set([newValue], forKey: "AppleLanguages")
                     }
                     UserDefaults.standard.synchronize()
-                    showRestartAlert = true
                 }
-                Text("Restart Gongje to apply language changes.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
 
             Section("Hotkey") {
@@ -111,17 +106,6 @@ private struct GeneralSettingsView: View {
             }
         }
         .formStyle(.grouped)
-        .alert("Restart Required", isPresented: $showRestartAlert) {
-            Button("Later", role: .cancel) {}
-            Button("Restart Now") {
-                let url = Bundle.main.bundleURL
-                let config = NSWorkspace.OpenConfiguration()
-                NSWorkspace.shared.openApplication(at: url, configuration: config) { _, _ in }
-                NSApp.terminate(nil)
-            }
-        } message: {
-            Text("Please restart Gongje to apply the language change.")
-        }
     }
 }
 

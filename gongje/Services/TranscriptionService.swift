@@ -234,8 +234,9 @@ actor TranscriptionService {
         let finalText = corrected.isEmpty ? sanitizeText(allPending) : corrected
 
         if !finalText.isEmpty && isValidTranscription(finalText) {
+            let outputText = Self.convertToTraditionalIfNeeded(finalText)
             await MainActor.run {
-                TextOutputService.injectText(finalText)
+                TextOutputService.injectText(outputText)
             }
         }
 
@@ -305,6 +306,14 @@ actor TranscriptionService {
             options: .regularExpression
         )
         return cleaned.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    /// Convert Simplified Chinese to Traditional Chinese when the app language is zh-Hant.
+    private static func convertToTraditionalIfNeeded(_ text: String) -> String {
+        let lang = UserDefaults.standard.string(forKey: "appLanguageOverride") ?? "system"
+        let effective = LLMService.resolveEffectiveLanguage(for: lang)
+        guard effective.hasPrefix("zh-Hant") else { return text }
+        return text.applyingTransform(StringTransform("Hans-Hant"), reverse: false) ?? text
     }
 
     private func requestLLMCorrection(_ text: String) {
@@ -404,9 +413,10 @@ actor TranscriptionService {
             // Update overlay with all accumulated text (hide hallucinations)
             let display = displayText
             let validDisplay = isValidTranscription(display) ? display : ""
+            let convertedDisplay = Self.convertToTraditionalIfNeeded(validDisplay)
             Task { @MainActor in
                 appState.confirmedText = ""
-                appState.hypothesisText = validDisplay
+                appState.hypothesisText = convertedDisplay
             }
             if !validDisplay.isEmpty {
                 requestLLMCorrection(validDisplay)
@@ -430,9 +440,10 @@ actor TranscriptionService {
         let validDisplay = isValidTranscription(display) ? display : ""
 
         // Update overlay
+        let convertedDisplay = Self.convertToTraditionalIfNeeded(validDisplay)
         Task { @MainActor in
             appState.confirmedText = ""
-            appState.hypothesisText = validDisplay
+            appState.hypothesisText = convertedDisplay
         }
 
         if textChanged && !validDisplay.isEmpty {
@@ -462,9 +473,10 @@ actor TranscriptionService {
         deferredFlushText = ""
         injectedLength = fullText.count
 
+        let convertedRawText = Self.convertToTraditionalIfNeeded(rawText)
         Task { @MainActor in
             let corrected = appState.correctedText
-            let finalText = corrected.isEmpty ? rawText : corrected
+            let finalText = corrected.isEmpty ? convertedRawText : Self.convertToTraditionalIfNeeded(corrected)
             TextOutputService.injectText(finalText)
             appState.confirmedText = ""
             appState.hypothesisText = ""

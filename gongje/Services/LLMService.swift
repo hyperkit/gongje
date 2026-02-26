@@ -89,26 +89,35 @@ actor LLMService {
 
     // MARK: - Defaults (exposed for SettingsManager)
 
-    static let defaultSystemPrompt = """
-        修正廣東話語音轉文字嘅同音錯字。
+    static let defaultSystemPrompt = String(localized: "default.system.prompt")
+    static let defaultUserPromptTemplate = String(localized: "default.user.prompt.template")
 
-        規則：
-        1. 只改同音/近音錯字，唔確定就保留原文。
-        2. 保持廣東話繁體字，唔好轉普通話（保留「嘅」唔好改做「的」）。
-        3. 保留標點、換行、數字、英文、專有名詞原樣不變。
-        4. 保持字數一致，只輸出修正後文字，無需解釋。
+    static func defaultSystemPrompt(for languageCode: String) -> String {
+        bundle(for: languageCode).localizedString(forKey: "default.system.prompt", value: nil, table: nil)
+    }
 
-        例：
-        香港自開化後 世界各國人士分支疊來 市場繁榮 百貨充電 -> 香港自開埠後 世界各國人士紛至沓來 市場繁榮 百貨充闐
-        不過而家要揾到一部打掃電話嘅電話題 -> 不過而家要揾到一部打到電話嘅電話亭
-        """
+    static func defaultUserPromptTemplate(for languageCode: String) -> String {
+        bundle(for: languageCode).localizedString(forKey: "default.user.prompt.template", value: nil, table: nil)
+    }
 
-    static let defaultUserPromptTemplate = """
-        以下係待校正文本。只輸出校正後文本，不要加任何說明。
-        [BEGIN]
-        {text}
-        [END]
-        """
+    static func resolveEffectiveLanguage(for code: String) -> String {
+        if code != "system" { return code }
+        let preferred = UserDefaults.standard.string(forKey: "detectedSystemLanguage")
+            ?? Locale.preferredLanguages.first
+            ?? "en"
+        if preferred.hasPrefix("zh-Hant-HK") || preferred.hasPrefix("yue") { return "zh-Hant-HK" }
+        if preferred.hasPrefix("zh-Hant") { return "zh-Hant-TW" }
+        return "en"
+    }
+
+    private static func bundle(for languageCode: String) -> Bundle {
+        let resolved = resolveEffectiveLanguage(for: languageCode)
+        if let path = Bundle.main.path(forResource: resolved, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return bundle
+        }
+        return Bundle.main
+    }
 
     // MARK: - Private
 

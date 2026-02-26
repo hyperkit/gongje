@@ -6,11 +6,23 @@ struct GongjeApp: App {
     @State private var transcriptionService: TranscriptionService
     @State private var didConfigure = false
     @AppStorage("setupCompleted") private var setupCompleted = false
+    @AppStorage("appLanguageOverride") private var appLanguageOverride: String = "system"
+
+    private var resolvedLocale: Locale {
+        switch appLanguageOverride {
+        case "system":
+            let systemLang = UserDefaults.standard.string(forKey: "detectedSystemLanguage") ?? "en"
+            return Locale(identifier: systemLang)
+        default:
+            return Locale(identifier: appLanguageOverride)
+        }
+    }
 
     var body: some Scene {
         MenuBarExtra {
             MenuBarView()
                 .environment(appState)
+                .environment(\.locale, resolvedLocale)
         } label: {
             MenuBarIcon(appState: appState, setupCompleted: setupCompleted)
                 .task {
@@ -28,6 +40,7 @@ struct GongjeApp: App {
         Settings {
             SettingsView()
                 .environment(appState)
+                .environment(\.locale, resolvedLocale)
                 .showInDock()
         }
 
@@ -37,6 +50,7 @@ struct GongjeApp: App {
                 didConfigure = true
             }
             .environment(appState)
+            .environment(\.locale, resolvedLocale)
             .showInDock()
         }
         .windowResizability(.contentSize)

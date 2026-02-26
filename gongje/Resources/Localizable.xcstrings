@@ -416,6 +416,54 @@
         }
       }
     },
+    "default.system.prompt" : {
+      "comment" : "Default LLM system prompt for speech-to-text correction",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correct homophone errors in speech-to-text transcription.\n\nRules:\n1. Only fix homophone/near-homophone errors. Keep original text when uncertain.\n2. Preserve punctuation, line breaks, numbers, and proper nouns as-is.\n3. Keep the word count consistent. Output only corrected text, no explanations.\n\nExamples:\nI went too the store and brought some food -> I went to the store and bought some food\nThe whether is nice and we should go four a walk -> The weather is nice and we should go for a walk"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修正廣東話語音轉文字嘅同音錯字。\n\n規則：\n1. 只改同音/近音錯字，唔確定就保留原文。\n2. 保持廣東話繁體字，唔好轉普通話（保留「嘅」唔好改做「的」），唔好用簡體字。\n3. 保留標點、換行、數字、英文、專有名詞原樣不變。\n4. 保持字數一致，只輸出修正後文字，無需解釋。\n\n例：\n香港自開化後 世界各國人士分支疊來 市場繁榮 百貨充電 -> 香港自開埠後 世界各國人士紛至沓來 市場繁榮 百貨充闐\n不過而家要揾到一部打掃電話嘅電話題 -> 不過而家要揾到一部打到電話嘅電話亭"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "修正語音轉文字的同音錯字。\n\n規則：\n1. 只改同音/近音錯字，不確定就保留原文。\n2. 必須使用繁體中文，不可輸出簡體字（如：「說」不可寫成「说」）。\n3. 保留標點、換行、數字、英文、專有名詞原樣不變。\n4. 保持字數一致，只輸出修正後文字，無需解釋。\n\n例：\n今天的天器很好 適合出門散不 -> 今天的天氣很好 適合出門散步\n我們一起去乘高鐵動車八 -> 我們一起去搭高鐵動車吧"
+          }
+        }
+      }
+    },
+    "default.user.prompt.template" : {
+      "comment" : "Default LLM user prompt template for speech-to-text correction. {text} is the placeholder for transcribed text.",
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below is the text to be corrected. Output only the corrected text with no explanation.\n[BEGIN]\n{text}\n[END]"
+          }
+        },
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以下係待校正文本。只輸出繁體中文校正後文本，不要加任何說明。\n[BEGIN]\n{text}\n[END]"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以下是待校正文本。只輸出繁體中文校正後文本，不要加任何說明。\n[BEGIN]\n{text}\n[END]"
+          }
+        }
+      }
+    },
     "Delete" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1454,6 +1502,7 @@
       }
     },
     "Please restart Gongje to apply the language change." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -1738,6 +1787,23 @@
         }
       }
     },
+    "Reset" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重設"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "重設"
+          }
+        }
+      }
+    },
     "Reset all advanced settings to defaults?" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -1773,6 +1839,7 @@
       }
     },
     "Restart Gongje to apply language changes." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -1953,6 +2020,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "設定..."
+          }
+        }
+      }
+    },
+    "Setup" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定精靈"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定精靈"
           }
         }
       }

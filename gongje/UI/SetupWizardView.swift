@@ -23,7 +23,7 @@ struct SetupWizardView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(24)
         }
-        .frame(width: 560, height: 440)
+        .frame(width: 560, height: 480)
     }
 
     // MARK: - Step Indicator
@@ -65,6 +65,9 @@ struct SetupWizardView: View {
 private struct WelcomeStep: View {
     var onNext: () -> Void
 
+    @AppStorage("appLanguageOverride") private var selectedLanguage: String = "system"
+    @AppStorage("setupCompleted") private var setupCompleted = false
+
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
@@ -82,6 +85,14 @@ private struct WelcomeStep: View {
                 .foregroundStyle(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
 
+            Picker("Language:", selection: $selectedLanguage) {
+                Text("System Default").tag("system")
+                Text(verbatim: "English").tag("en")
+                Text(verbatim: "繁體中文（台灣）").tag("zh-Hant-TW")
+                Text(verbatim: "繁體中文（香港）").tag("zh-Hant-HK")
+            }
+            .frame(maxWidth: 250)
+
             VStack(alignment: .leading, spacing: 6) {
                 Label("Microphone access", systemImage: "mic")
                 Label("Accessibility permission", systemImage: "accessibility")
@@ -98,6 +109,30 @@ private struct WelcomeStep: View {
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
         }
+        .onAppear {
+            if !setupCompleted {
+                applyDefaultPrompts()
+            }
+        }
+        .onChange(of: selectedLanguage) { _, newValue in
+            applyLanguageOverride(newValue)
+            applyDefaultPrompts()
+        }
+    }
+
+    private func applyLanguageOverride(_ language: String) {
+        if language == "system" {
+            UserDefaults.standard.removeObject(forKey: "AppleLanguages")
+        } else {
+            UserDefaults.standard.set([language], forKey: "AppleLanguages")
+        }
+        UserDefaults.standard.synchronize()
+    }
+
+    private func applyDefaultPrompts() {
+        let effectiveLang = LLMService.resolveEffectiveLanguage(for: selectedLanguage)
+        SettingsManager.llmSystemPrompt = LLMService.defaultSystemPrompt(for: effectiveLang)
+        SettingsManager.llmUserPromptTemplate = LLMService.defaultUserPromptTemplate(for: effectiveLang)
     }
 }
 

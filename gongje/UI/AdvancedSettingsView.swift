@@ -29,6 +29,7 @@ struct AdvancedSettingsView: View {
     @AppStorage("whisperRequiredSegments") private var whisperRequiredSegments: Int = 2
     @AppStorage("whisperSilenceThreshold") private var whisperSilenceThreshold: Double = 0.3
 
+    @AppStorage("appLanguageOverride") private var appLanguageOverride: String = "system"
     @State private var showResetConfirmation = false
 
     var body: some View {
@@ -295,8 +296,9 @@ struct AdvancedSettingsView: View {
         llmMaxTokensCap = 96
         llmMaxTokensBuffer = 24
         llmDebounceMs = 300
-        llmSystemPrompt = LLMService.defaultSystemPrompt
-        llmUserPromptTemplate = LLMService.defaultUserPromptTemplate
+        let effectiveLang = LLMService.resolveEffectiveLanguage(for: appLanguageOverride)
+        llmSystemPrompt = LLMService.defaultSystemPrompt(for: effectiveLang)
+        llmUserPromptTemplate = LLMService.defaultUserPromptTemplate(for: effectiveLang)
         whisperLanguage = "yue"
         whisperTemperature = 0.0
         whisperCompressionRatioThreshold = 2.2
