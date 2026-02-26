@@ -40,7 +40,6 @@ Gongje is a macOS menu bar app that performs on-device Cantonese speech-to-text 
           │ ├ AudioStreamTranscriber│
           │ ├ NoiseSuppressing-     │
           │ │  AudioProcessor       │
-          │ ├ VAD flush + deferred  │
           │ └ Hallucination filter  │
           └──────┬──────────────────┘
                  │ raw text
@@ -84,17 +83,17 @@ On first launch (`setupCompleted` is false), the `MenuBarIcon` opens the setup w
 
 **`WhisperModel.swift`** — Enum of available Whisper model variants, organized into two `LanguageStyleGroup` categories:
 - **Written Chinese** (書面語): OpenAI models (Small, Medium, Large V3) — produce standard written Chinese characters
-- **Spoken Cantonese** (口語): Community models (Cantonese Small, Cantonese Large V3) — produce spoken Cantonese characters
+- **Spoken Cantonese** (口語): Community models (Cantonese Small, Cantonese Large V3 Turbo) — produce spoken Cantonese characters
 
 Each model knows its display name, approximate size, minimum RAM, short description, HuggingFace URLs (original and CoreML repos), per-model `hallucinationPatterns` (exact-match phrases the model emits on silence), and an `llmCorrectionDistanceScale` that controls how aggressively the LLM drift guard allows edits. Provides `systemRecommended` based on physical memory.
 
 **`LLMModel.swift`** — Enum of LLM model variants for text correction:
-- `qwen25_05b` — Qwen 2.5 0.5B 4-bit (~400 MB)
-- `qwen25_15b` — Qwen 2.5 1.5B 4-bit (~870 MB, default)
-- `qwen25_3b` — Qwen 2.5 3B 4-bit (~1.8 GB)
-- `qwen2Cantonese7b` — Local Cantonese 7B 4-bit (~4 GB, local-only)
+- `qwen3_17b` — Qwen 3 1.7B 4-bit (~1.2 GB, default)
+- `qwen3_4b` — Qwen 3 4B 4-bit (~2.5 GB)
+- `qwen3_8b` — Qwen 3 8B 4-bit (~5 GB)
+- `qwen2Cantonese7b` — Cantonese-focused Qwen 2 7B 4-bit (~4 GB)
 
-Each model knows its HuggingFace ID (nil for local-only), display name, short description, minimum RAM, and local directory name. Remote models are downloaded via MLX; local models are resolved from the shared models directory.
+Each model knows its HuggingFace repo ID, display name, short description, minimum RAM, and original upstream repo. Models are downloaded via MLX Swift's `LLMModelFactory` and resolved from the shared HuggingFace cache directory.
 
 ### Services
 
@@ -103,11 +102,10 @@ Each model knows its HuggingFace ID (nil for local-only), display name, short de
 1. **Model loading** — Two-phase: download with progress callback, then initialize with `download: false` to skip re-downloading. Also provides `unloadModel()` to nil out the WhisperKit instance and free memory.
 2. **Streaming** — Uses WhisperKit's `AudioStreamTranscriber` which handles audio capture, VAD, hallucination detection (compression ratio + logprob thresholds), and segment confirmation internally.
 3. **Audio cues** — Plays a system sound ("Pop") before the audio hardware is reconfigured, with a brief delay to let it finish before recording starts.
-4. **VAD-based flush with deferred accumulation** — When WhisperKit's VAD detects a pause and triggers a stream reset (clearing segments), the text is not flushed immediately. Instead it's accumulated in `deferredFlushText`. A 3-second timer starts — if no new speech arrives, the accumulated text is flushed. If new speech arrives, the timer is cancelled and the deferred text is cleared (the new decode already includes it). This prevents mid-sentence cutoffs from aggressive VAD.
-5. **Hallucination filter** — Post-processing filter (`isValidTranscription`) rejects outputs containing bracket markers (`[`, `]`, `(`, `)`) and per-model hallucination phrases (exact match via `WhisperModel.hallucinationPatterns`). Hallucinated text is also suppressed from the overlay display.
-7. **LLM correction** — After each transcription update, sends the raw text to `LLMService.correctText()` (non-blocking). On flush/stop, prefers `correctedText` over raw text for injection.
-8. **Stop handling** — Stops the stream, combines any deferred text with remaining pending text, injects the result (preferring LLM-corrected text, after hallucination filtering), then purges the audio buffer for the next session.
-9. **Audio buffer management** — Audio samples are purged only after the stream transcriber is fully stopped (`stopStreaming`), never during active streaming, to avoid corrupting the transcriber's internal offset tracking.
+4. **Hallucination filter** — Post-processing filter (`isValidTranscription`) rejects outputs containing bracket markers (`[`, `]`, `(`, `)`, `<`, `>`), prompt injection artifacts, and per-model hallucination phrases (exact match via `WhisperModel.hallucinationPatterns`). Hallucinated text is also suppressed from the overlay display.
+5. **LLM correction** — After each transcription update, sends the raw text to `LLMService.correctText()` (non-blocking). On stop, prefers `correctedText` over raw text for injection.
+6. **Stop handling** — Stops the stream, combines any pending text, injects the result (preferring LLM-corrected text, after hallucination filtering), then purges the audio buffer for the next session.
+7. **Audio buffer management** — Audio samples are purged only after the stream transcriber is fully stopped (`stopStreaming`), never during active streaming, to avoid corrupting the transcriber's internal offset tracking.
 
 **`LLMService.swift`** — An `actor` managing on-device LLM inference for text correction. Key responsibilities:
 1. **Model loading** — Loads models from HuggingFace (remote) or local directory via MLX Swift's `LLMModelFactory`
@@ -159,18 +157,23 @@ Both operations run on the AMX coprocessor on Apple Silicon at near-zero CPU/GPU
 
 **`WaveformView.swift`** — A Canvas-based frequency spectrum visualizer shown behind the overlay text. Uses `FrequencyAnalyzer` to perform real-time FFT on raw audio samples, displaying 40 speech-frequency bars (85–4000 Hz) flanked by 12 static bars on each side. Bars are mirrored vertically from center with a fade at the edges. Renders at half the display refresh rate via `CVDisplayLink`, interpolating toward target values each frame for smooth animation. Toggled via "Show waveform effect" in Settings (default off on ≤8 GB RAM).
 
-**`SettingsView.swift`** — Three-tab settings window (640x500):
-- **General** — Hotkey recorder, overlay toggle, clipboard settings (preserve toggle with configurable restore delay, Crossover/Wine Ctrl-V toggle with configurable delay), "Run Setup Wizard..." button
+**`SettingsView.swift`** — Four-tab settings window (680x560):
+- **General** — Language selector, hotkey recorder, overlay toggle (with waveform sub-toggle), clipboard settings (preserve toggle with configurable restore delay, Crossover/Wine Ctrl-V toggle with configurable delay), "Run Setup Wizard..." button
 - **Model** — Whisper model picker (grouped by Written Chinese / Spoken Cantonese) with model info (repo name, description, HuggingFace link), reload button, download progress. LLM text correction section with enable toggle, model picker with info, reload button. Storage management (disk usage, delete all, open in Finder)
 - **Permissions** — Microphone and Accessibility status with action buttons
+- **Advanced** — Noise reduction (enable toggle, strength slider), Whisper decoding parameters (language, temperature, compression ratio threshold, log-prob thresholds, no-speech threshold), Whisper streaming parameters (required segments, silence threshold), LLM generation parameters (temperature, top-p, repetition penalty, max tokens, debounce), editable prompt templates (system prompt, user prompt), reset to defaults
 
 **`PermissionsView.swift`** — Inline permission status display used in Settings. Shows green/red indicators for Microphone and Accessibility, with buttons to open System Settings and reveal the app binary in Finder (useful for manually granting Accessibility access).
+
+**`AdvancedSettingsView.swift`** — Advanced settings tab for fine-tuning noise reduction, Whisper decoding/streaming parameters, LLM generation parameters, and prompt templates. All fields have sliders and text inputs with a "Reset All to Defaults" button.
+
+**`DockVisibility.swift`** — Manages Dock icon visibility. The app normally hides from the Dock (`LSUIElement`), but shows itself when Settings or Setup windows are open so that the windows appear in the window switcher.
 
 ### Settings
 
 **`HotkeyNames.swift`** — Declares `KeyboardShortcuts.Name.toggleRecording` with default `Option-Space`.
 
-**`SettingsManager.swift`** — UserDefaults-backed preferences for overlay visibility, clipboard preservation, selected model, noise reduction settings, and Whisper/LLM advanced parameters.
+**`SettingsManager.swift`** — UserDefaults-backed preferences for overlay visibility, clipboard preservation, selected model, noise reduction settings, Whisper decoding/streaming parameters, and LLM generation parameters including prompt templates.
 
 ## Data Flow
 
@@ -217,31 +220,24 @@ User presses Option-Space
 
 AudioStreamTranscriber state callback (continuous)
   → handleStateChange()
-    → If stream reset (VAD detected pause, segments cleared):
-      → Accumulate text in deferredFlushText
-      → Start 3s flush timer
-    → If new text arrives:
-      → Cancel flush timer, clear deferred text (new decode includes it)
-      → Update overlay with all accumulated text
-      → Send raw text to LLMService.correctText() (async, 300ms debounce)
-        → LLM streams corrected tokens → appState.correctedText
-        → Overlay upgrades from gray (raw) to white (corrected)
-    → If flush timer fires (3s of silence):
-      → flushDeferred() → inject correctedText ?? rawText → Cmd-V (+Ctrl-V)
-      → Clear overlay
+    → Compute frequency spectrum for waveform visualizer
+    → Update overlay with current transcription text
+    → Send raw text to LLMService.correctText() (async, 300ms debounce)
+      → LLM streams corrected tokens → appState.correctedText
+      → Overlay upgrades from gray (raw) to white (corrected)
 
 User presses Option-Space again
   → AppState.toggleRecording()
     → AppState.stopRecording()
       → isRecording = false
-      → Play "Pop" sound
       → TranscriptionService.stopStreaming()
-        → Cancel flush timer, cancel LLM generation
+        → Cancel LLM generation
         → Stop AudioStreamTranscriber
-        → Combine deferred + pending text
-        → Inject correctedText ?? rawText (after validation)
+        → Combine pending text
+        → Inject correctedText ?? rawText (after hallucination validation)
         → Purge audio buffer
         → Clear overlay
+      → Play "Pop" sound
 ```
 
 ### Model Loading Flow
@@ -275,14 +271,6 @@ Direct text insertion via AX APIs (`AXUIElementSetAttributeValue`) is unreliable
 
 WhisperKit's `AudioStreamTranscriber` handles audio buffering, VAD (voice activity detection), hallucination filtering (compression ratio and logprob thresholds), and segment confirmation internally. A manual loop would need to reimplement all of these and is prone to issues like unbounded hallucination during silence.
 
-### Why deferred flush instead of immediate VAD flush?
-
-WhisperKit's VAD triggers stream resets at natural speech pauses, not just at end-of-speech. Flushing immediately on every stream reset causes text to be cut mid-sentence. The deferred approach accumulates text across stream resets and only flushes after 3 seconds of true silence (no new decode activity). If new speech arrives, the deferred text is cleared because WhisperKit's next decode cycle re-processes the same audio and produces the complete text.
-
-### Why not purge audio during streaming?
-
-Calling `purgeAudioSamples(keepingLast: 0)` during active streaming desynchronizes the `AudioStreamTranscriber`'s internal audio offset tracking from the `audioProcessor`'s buffer, causing subsequent decode cycles to produce empty results. Audio is only purged after the transcriber is fully stopped, ensuring a clean state for the next recording session.
-
 ### Why actor for TranscriptionService?
 
 WhisperKit operations are async and involve mutable state (the streaming transcriber, deferred text, injected text tracking). Using a Swift actor ensures thread-safe access without manual locking.
@@ -291,9 +279,9 @@ WhisperKit operations are async and involve mutable state (the streaming transcr
 
 The app needs to post `CGEvent` keyboard events (simulated Cmd-V) to inject text into other applications. This requires both Accessibility permission and unsandboxed execution, as sandboxed apps cannot post events to other processes.
 
-### Why LSUIElement?
+### Why LSUIElement with dynamic Dock visibility?
 
-The app is a menu bar utility — it shouldn't appear in the Dock or the Cmd-Tab switcher. `LSUIElement = true` in Info.plist achieves this. Note: `SettingsLink` doesn't work in LSUIElement apps, so Settings is opened programmatically via `NSApp.sendAction(Selector(("showSettingsWindow:")))`.
+The app is a menu bar utility — it shouldn't appear in the Dock or the Cmd-Tab switcher during normal use. `LSUIElement = true` in Info.plist achieves this. However, when the Settings or Setup Wizard window is open, `DockVisibility` temporarily makes the app visible in the Dock so these windows appear in the window switcher. Note: `SettingsLink` doesn't work in LSUIElement apps, so Settings is opened programmatically via `NSApp.sendAction(Selector(("showSettingsWindow:")))`.
 
 ### Why on-device LLM text correction?
 
@@ -305,7 +293,7 @@ Some users run Windows applications via Crossover/Wine on macOS. These apps resp
 
 ### Why a setup wizard?
 
-Without onboarding, new users see a menu bar icon appear, permissions get requested without explanation, and a large model download begins immediately. The 6-step wizard guides users through permissions, model selection, optional LLM setup, and hotkey configuration with context about why each step is needed. Setup state is persisted via `@AppStorage("setupCompleted")` so the wizard only appears once. A "Run Setup Wizard..." button in Settings allows re-running it.
+Without onboarding, new users see a menu bar icon appear, permissions get requested without explanation, and a large model download begins immediately. The 6-step wizard guides users through permissions, model selection, optional LLM setup, and hotkey configuration with context about why each step is needed. Setup state is persisted via `@AppStorage("setupCompleted")` so the wizard only appears once. A "Run Setup Wizard..." button in General Settings allows re-running it.
 
 ### Why vDSP-based noise reduction instead of a neural model?
 
