@@ -20,6 +20,10 @@ struct SettingsView: View {
                 .tabItem {
                     Label("Advanced", systemImage: "slider.horizontal.3")
                 }
+            AboutSettingsView()
+                .tabItem {
+                    Label("About", systemImage: "info.circle")
+                }
         }
         .frame(width: 680, height: 560)
     }
@@ -347,5 +351,105 @@ private struct ModelSettingsView: View {
             total += UInt64(size)
         }
         return total
+    }
+}
+
+private struct AboutSettingsView: View {
+    private var appVersion: String {
+        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
+        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
+        return "\(version) (\(build))"
+    }
+
+    private var appName: String {
+        Bundle.main.localizedInfoDictionary?["CFBundleDisplayName"] as? String
+            ?? Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String
+            ?? "Gongje"
+    }
+
+    var body: some View {
+        Form {
+            Section {
+                HStack(spacing: 16) {
+                    if let icon = NSImage(named: "AppIcon") {
+                        Image(nsImage: icon)
+                            .resizable()
+                            .frame(width: 64, height: 64)
+                            .cornerRadius(14)
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(appName)
+                            .font(.title)
+                            .fontWeight(.bold)
+                        Text("Version \(appVersion)")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+                }
+                .padding(.vertical, 4)
+            }
+
+            Section("Description") {
+                Text("An on-device Cantonese speech-to-text app for macOS. Powered by WhisperKit and optional local LLM text correction, all processing stays on your Mac — no internet connection or cloud services required.")
+                    .font(.callout)
+            }
+
+            Section("Limitations") {
+                VStack(alignment: .leading, spacing: 6) {
+                    aboutBullet("Requires Apple Silicon (M1 or later)")
+                    aboutBullet("Models must be downloaded before first use")
+                    aboutBullet("Transcription accuracy varies by model size and audio quality")
+                    aboutBullet("LLM text correction requires additional memory")
+                }
+                .font(.callout)
+            }
+
+            Section("Credits") {
+                VStack(alignment: .leading, spacing: 10) {
+                    Text("Libraries")
+                        .font(.callout)
+                        .fontWeight(.semibold)
+                    VStack(alignment: .leading, spacing: 4) {
+                        aboutBullet("WhisperKit — on-device speech recognition")
+                        aboutBullet("MLX Swift — local LLM inference")
+                        aboutBullet("KeyboardShortcuts — global hotkey support")
+                        aboutBullet("Swift Transformers — tokenizer support")
+                        aboutBullet("Jinja — template rendering")
+                    }
+                    .font(.callout)
+
+                    Text("Models")
+                        .font(.callout)
+                        .fontWeight(.semibold)
+                    VStack(alignment: .leading, spacing: 4) {
+                        aboutBullet("OpenAI Whisper — base speech recognition model")
+                        aboutBullet("Qwen (Alibaba) — base LLM model")
+                        aboutBullet("Community fine-tunes by AlvanLii, JackyHoCL, lordjia")
+                    }
+                    .font(.callout)
+                }
+            }
+
+            Section("Source Code") {
+                HStack {
+                    Text("This project is open source.")
+                        .font(.callout)
+                    Spacer()
+                    Button("View on GitHub") {
+                        if let url = URL(string: "https://github.com/hyperkit/gongje") {
+                            NSWorkspace.shared.open(url)
+                        }
+                    }
+                }
+            }
+        }
+        .formStyle(.grouped)
+    }
+
+    private func aboutBullet(_ text: LocalizedStringKey) -> some View {
+        HStack(alignment: .top, spacing: 6) {
+            Text("•")
+            Text(text)
+        }
     }
 }
