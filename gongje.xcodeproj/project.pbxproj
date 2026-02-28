@@ -10,6 +10,7 @@
 		080B746A2F5073FC00F82BC8 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 080B74692F5073FC00F82BC8 /* AppIcon.icon */; };
 		0DA811AA603F8AED3E5A0673 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 1785D82BC0100FB9B53319F1 /* KeyboardShortcuts */; };
 		19DE6D83FE6C953839DBD9FC /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D06EA9C531C5F153951B6 /* ModelManager.swift */; };
+		A5B6C7D8E9F01234ABCD7890 /* MicTestMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */; };
 		20CB89249C2AFA0731D3A074 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2CA35FFB0B3586F9B9EDA40B /* WhisperKit */; };
 		253711BEAF2746C51AF5B369 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE4ED6640CA3B04028DD3D3 /* MLXLLM */; };
 		392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3628216DF133D2A02265B0F /* AudioEngine.swift */; };
@@ -58,6 +59,7 @@
 		1348EE74C96E9B79B49FB180 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		1370275B6CC36DAB7A21FDC2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		171D06EA9C531C5F153951B6 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
+		F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicTestMonitor.swift; sourceTree = "<group>"; };
 		1B84DD5A3415E1CFAEAA5C35 /* GongjeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GongjeApp.swift; sourceTree = "<group>"; };
 		1BDDD84836AB84FE5C7E37A6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		2105CA92F1FB455B1EEB0847 /* HotkeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyNames.swift; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				F3628216DF133D2A02265B0F /* AudioEngine.swift */,
 				0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */,
 				AE6C4F71B3359A6098A91294 /* LLMService.swift */,
+				F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */,
 				171D06EA9C531C5F153951B6 /* ModelManager.swift */,
 				E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */,
 				BE2CA3D92484C6875BAE85E4 /* TextOutputService.swift */,
@@ -345,6 +348,7 @@
 				DE36DF41AC89F9257E1E1D85 /* LLMModel.swift in Sources */,
 				F2B40A6C6195DBB19194A19A /* LLMService.swift in Sources */,
 				E0BFFC5922CF4C32808661FC /* MenuBarView.swift in Sources */,
+				A5B6C7D8E9F01234ABCD7890 /* MicTestMonitor.swift in Sources */,
 				19DE6D83FE6C953839DBD9FC /* ModelManager.swift in Sources */,
 				D832680BF271D784CCEFEB43 /* PermissionsView.swift in Sources */,
 				853707BD94F1CD0C678C08E1 /* SettingsManager.swift in Sources */,
