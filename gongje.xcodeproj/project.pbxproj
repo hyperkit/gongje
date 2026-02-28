@@ -10,7 +10,6 @@
 		080B746A2F5073FC00F82BC8 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 080B74692F5073FC00F82BC8 /* AppIcon.icon */; };
 		0DA811AA603F8AED3E5A0673 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 1785D82BC0100FB9B53319F1 /* KeyboardShortcuts */; };
 		19DE6D83FE6C953839DBD9FC /* ModelManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 171D06EA9C531C5F153951B6 /* ModelManager.swift */; };
-		A5B6C7D8E9F01234ABCD7890 /* MicTestMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */; };
 		20CB89249C2AFA0731D3A074 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = 2CA35FFB0B3586F9B9EDA40B /* WhisperKit */; };
 		253711BEAF2746C51AF5B369 /* MLXLLM in Frameworks */ = {isa = PBXBuildFile; productRef = 0FE4ED6640CA3B04028DD3D3 /* MLXLLM */; };
 		392EA586373DDC56828649C7 /* AudioEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3628216DF133D2A02265B0F /* AudioEngine.swift */; };
@@ -23,6 +22,7 @@
 		8CF2E7FA5877571E4C2C3C8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 382B0BA12CC08F3E90CE0347 /* Assets.xcassets */; };
 		A1B2C3D4E5F6789012345678 /* AdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6789012345678A1 /* AdvancedSettingsView.swift */; };
 		A4B6D5EAB517D0AEC3CF0C22 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4FF6CEB30DBBF206565D2 /* SettingsView.swift */; };
+		A5B6C7D8E9F01234ABCD7890 /* MicTestMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */; };
 		AA0D0B7769B06E0DBB9DE416 /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6327C17D70111A72752A356 /* TranscriptionService.swift */; };
 		B0E6443390FD9CDEC60C8267 /* GongjeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0361D92784E3A41CBD21219 /* GongjeTests.swift */; };
 		BBCA5A3D79B7DB8E6E6081D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF762DCEB44700BDD6904FFB /* AppDelegate.swift */; };
@@ -59,7 +59,6 @@
 		1348EE74C96E9B79B49FB180 /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		1370275B6CC36DAB7A21FDC2 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		171D06EA9C531C5F153951B6 /* ModelManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelManager.swift; sourceTree = "<group>"; };
-		F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicTestMonitor.swift; sourceTree = "<group>"; };
 		1B84DD5A3415E1CFAEAA5C35 /* GongjeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GongjeApp.swift; sourceTree = "<group>"; };
 		1BDDD84836AB84FE5C7E37A6 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		2105CA92F1FB455B1EEB0847 /* HotkeyNames.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyNames.swift; sourceTree = "<group>"; };
@@ -85,6 +84,7 @@
 		DF762DCEB44700BDD6904FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoiseSuppressingAudioProcessor.swift; sourceTree = "<group>"; };
 		F3628216DF133D2A02265B0F /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicTestMonitor.swift; sourceTree = "<group>"; };
 		F6327C17D70111A72752A356 /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
 		F941812FAFB179D396921C44 /* WhisperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -382,7 +382,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = gongje/Resources/gongje.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = gongje/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -558,7 +558,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = gongje/Resources/gongje.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = gongje/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";

@@ -6,9 +6,11 @@ enum TextOutputService {
         guard !text.isEmpty else { return }
 
         let pasteboard = NSPasteboard.general
-        let preserveClipboard = UserDefaults.standard.bool(forKey: "preserveClipboard")
+        let autoPaste = UserDefaults.standard.bool(forKey: "autoPaste")
+        let shouldPaste = autoPaste && isAccessibilityGranted
+        let preserveClipboard = shouldPaste && UserDefaults.standard.bool(forKey: "preserveClipboard")
 
-        // Save current clipboard
+        // Save current clipboard (only when auto-paste will restore it)
         var previousItems: [NSPasteboardItem]?
         if preserveClipboard {
             previousItems = pasteboard.pasteboardItems?.compactMap { item -> NSPasteboardItem? in
@@ -22,12 +24,19 @@ enum TextOutputService {
             }
         }
 
-        // Write text to clipboard
+        // Write text to clipboard (always — baseline behavior)
         pasteboard.clearContents()
         print("Set string to pasteboard: \(text)")
         pasteboard.setString(text, forType: .string)
 
-        // Simulate Cmd-V (macOS native paste)
+        // Announce via VoiceOver (genuine accessibility feature)
+        if UserDefaults.standard.bool(forKey: "voiceOverAnnouncements") {
+            announceForVoiceOver(text)
+        }
+
+        // Simulate paste only when auto-paste is enabled and AX is granted
+        guard shouldPaste else { return }
+
         simulatePaste(modifier: .maskCommand)
 
         // Also simulate Ctrl-V for Windows apps running via Crossover/Wine
@@ -72,6 +81,20 @@ enum TextOutputService {
 
         keyDown?.post(tap: .cghidEventTap)
         keyUp?.post(tap: .cghidEventTap)
+    }
+
+    /// Announce transcription result via VoiceOver.
+    /// Uses NSAccessibility posting which works without AXIsProcessTrusted
+    /// and is a no-op when VoiceOver is inactive.
+    static func announceForVoiceOver(_ text: String) {
+        NSAccessibility.post(
+            element: NSApp as Any,
+            notification: .announcementRequested,
+            userInfo: [
+                .announcement: text,
+                .priority: NSAccessibilityPriorityLevel.high.rawValue,
+            ]
+        )
     }
 
     static var isAccessibilityGranted: Bool {

@@ -31,19 +31,19 @@
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "Gongje needs Accessibility access to type transcribed text into applications."
+            "value" : "Gongje uses Accessibility to announce transcription results via VoiceOver and optionally auto-paste text for hands-free voice input."
           }
         },
         "zh-Hant-HK" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「講嘢」需要「輔助使用」權限嚟將轉錄嘅文字打入應用程式度。"
+            "value" : "「講嘢」使用「輔助使用」透過 VoiceOver 朗讀轉錄結果，亦可以選擇自動貼上文字嚟做免提語音輸入。"
           }
         },
         "zh-Hant-TW" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「講嘢」需要「輔助使用」權限來將轉錄的文字輸入到應用程式中。"
+            "value" : "「講嘢」使用「輔助使用」透過 VoiceOver 朗讀轉錄結果，並可選擇自動貼上文字以進行免持語音輸入。"
           }
         }
       }

@@ -9,7 +9,7 @@ struct SetupWizardView: View {
     var onComplete: () -> Void
 
     @State private var currentStep = 0
-    private let totalSteps = 6
+    private let totalSteps = 5
 
     var body: some View {
         VStack(spacing: 0) {
@@ -45,10 +45,9 @@ struct SetupWizardView: View {
         switch currentStep {
         case 0: WelcomeStep(onNext: { currentStep = 1 })
         case 1: MicrophoneStep(onNext: { currentStep = 2 }, onBack: { currentStep = 0 })
-        case 2: AccessibilityStep(onNext: { currentStep = 3 }, onBack: { currentStep = 1 })
-        case 3: ModelStep(onNext: { currentStep = 4 }, onBack: { currentStep = 2 })
-        case 4: LLMStep(onNext: { currentStep = 5 }, onBack: { currentStep = 3 })
-        case 5: ReadyStep(onFinish: finish, onBack: { currentStep = 4 })
+        case 2: ModelStep(onNext: { currentStep = 3 }, onBack: { currentStep = 1 })
+        case 3: LLMStep(onNext: { currentStep = 4 }, onBack: { currentStep = 2 })
+        case 4: ReadyStep(onFinish: finish, onBack: { currentStep = 3 })
         default: EmptyView()
         }
     }
@@ -95,7 +94,6 @@ private struct WelcomeStep: View {
 
             VStack(alignment: .leading, spacing: 6) {
                 Label("Microphone test", systemImage: "mic")
-                Label("Accessibility permission", systemImage: "accessibility")
                 Label("Speech recognition model", systemImage: "cpu")
                 Label("Text correction (optional)", systemImage: "text.badge.checkmark")
                 Label("Keyboard shortcut", systemImage: "keyboard")
@@ -259,100 +257,7 @@ private struct MicrophoneStep: View {
     }
 }
 
-// MARK: - Step 3: Accessibility
-
-private struct AccessibilityStep: View {
-    var onNext: () -> Void
-    var onBack: () -> Void
-
-    @State private var granted = TextOutputService.isAccessibilityGranted
-    @State private var pollTimer: Timer?
-
-    var body: some View {
-        VStack(spacing: 16) {
-            Spacer()
-
-            Image(systemName: granted ? "accessibility.badge.arrow.up.right" : "accessibility")
-                .font(.system(size: 48))
-                .foregroundStyle(granted ? Color.green : Color.accentColor)
-
-            Text("Accessibility Permission")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text("Gongje uses Accessibility to type transcribed text into any app. You'll need to add Gongje in System Settings.")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-
-            HStack(spacing: 6) {
-                Image(systemName: granted ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundStyle(granted ? .green : .red)
-                if granted {
-                    Text("Accessibility access granted")
-                        .font(.callout)
-                } else {
-                    Text("Waiting for permission...")
-                        .font(.callout)
-                }
-            }
-            .padding(.vertical, 4)
-
-            if !granted {
-                HStack(spacing: 12) {
-                    Button("Open System Settings") {
-                        TextOutputService.openAccessibilitySettings()
-                    }
-                    .buttonStyle(.borderedProminent)
-
-                    Button("Reveal App in Finder") {
-                        NSWorkspace.shared.activateFileViewerSelecting([Bundle.main.bundleURL])
-                    }
-                    .buttonStyle(.bordered)
-                }
-            }
-
-            Spacer()
-
-            HStack {
-                Button("Back") { onBack() }
-                    .buttonStyle(.bordered)
-                Spacer()
-                if granted {
-                    Button("Continue") { onNext() }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                } else {
-                    Button("Skip for now") { onNext() }
-                        .buttonStyle(.bordered)
-                }
-            }
-        }
-        .onAppear { startPolling() }
-        .onDisappear { stopPolling() }
-    }
-
-    private func startPolling() {
-        pollTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-            let newValue = TextOutputService.isAccessibilityGranted
-            if newValue != granted {
-                granted = newValue
-                if granted {
-                    stopPolling()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        onNext()
-                    }
-                }
-            }
-        }
-    }
-
-    private func stopPolling() {
-        pollTimer?.invalidate()
-        pollTimer = nil
-    }
-}
-
-// MARK: - Step 4: Model Selection + Download
+// MARK: - Step 3: Model Selection + Download
 
 private struct ModelStep: View {
     @Environment(AppState.self) private var appState
@@ -472,7 +377,7 @@ private struct ModelStep: View {
     }
 }
 
-// MARK: - Step 5: LLM Setup
+// MARK: - Step 4: LLM Setup
 
 private struct LLMStep: View {
     @Environment(AppState.self) private var appState
@@ -604,7 +509,7 @@ private struct LLMStep: View {
     }
 }
 
-// MARK: - Step 6: Ready
+// MARK: - Step 5: Ready
 
 private struct ReadyStep: View {
     var onFinish: () -> Void

@@ -5,6 +5,8 @@ struct SettingsManager {
     @AppStorage("selectedModel") static var selectedModelRaw: String = WhisperModel.systemRecommended.rawValue
     @AppStorage("showOverlay") static var showOverlay: Bool = true
     @AppStorage("preserveClipboard") static var preserveClipboard: Bool = true
+    @AppStorage("autoPaste") static var autoPaste: Bool = false
+    @AppStorage("voiceOverAnnouncements") static var voiceOverAnnouncements: Bool = true
 
     static var selectedModel: WhisperModel {
         get { WhisperModel(rawValue: selectedModelRaw) ?? .systemRecommended }

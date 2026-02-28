@@ -134,6 +134,7 @@
       }
     },
     "Accessibility access granted" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -167,6 +168,7 @@
       }
     },
     "Accessibility Permission" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -178,6 +180,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "輔助使用權限"
+          }
+        }
+      }
+    },
+    "Accessibility permission is required for auto-paste." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動貼上需要「輔助使用」權限。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動貼上功能需要「輔助使用」權限。"
           }
         }
       }
@@ -244,6 +262,55 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "一款 macOS 本機粵語語音轉文字應用程式。由 WhisperKit 驅動，搭配可選的本機 LLM 文字校正，所有處理都在您的 Mac 上完成——不需要網路連線或雲端服務。"
+          }
+        }
+      }
+    },
+    "Announce transcription results via VoiceOver when active." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "喺 VoiceOver 啟用時朗讀轉錄結果。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在 VoiceOver 啟用時朗讀轉錄結果。"
+          }
+        }
+      }
+    },
+    "Auto-paste transcribed text" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動貼上轉錄文字"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動貼上轉錄文字"
+          }
+        }
+      }
+    },
+    "Automatically paste transcribed text into the active app for a fully hands-free voice input experience. Requires Accessibility permission." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動將轉錄文字貼上去使用中嘅 App，實現完全免提語音輸入體驗。需要「輔助使用」權限。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自動將轉錄文字貼上到使用中的應用程式，實現完全免持語音輸入體驗。需要「輔助使用」權限。"
           }
         }
       }
@@ -637,6 +704,23 @@
         }
       }
     },
+    "Diagnostics" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "診斷"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "診斷"
+          }
+        }
+      }
+    },
     "Download & Continue" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -937,7 +1021,24 @@
         }
       }
     },
+    "Gongje captures audio from your microphone to perform on-device speech recognition. All processing happens locally on your Mac — no audio is sent to any server." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「講嘢」透過咪高峰錄音嚟進行本機語音辨識。所有處理都喺你部 Mac 上面完成——冇任何音訊會傳送去伺服器。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「講嘢」透過麥克風錄音來進行本機語音辨識。所有處理都在您的 Mac 上完成——沒有任何音訊會傳送至伺服器。"
+          }
+        }
+      }
+    },
     "Gongje uses Accessibility to type transcribed text into any app. You'll need to add Gongje in System Settings." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -970,6 +1071,23 @@
         }
       }
     },
+    "Grant Access" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授權"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "授權"
+          }
+        }
+      }
+    },
     "Granted" : {
       "localizations" : {
         "zh-Hant-HK" : {
@@ -982,6 +1100,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "已授權"
+          }
+        }
+      }
+    },
+    "Hands-free text input" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免提文字輸入"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "免持文字輸入"
           }
         }
       }
@@ -1592,7 +1727,41 @@
         }
       }
     },
+    "Not granted — optional" : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未授權 — 可選"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未授權 — 可選"
+          }
+        }
+      }
+    },
+    "Not granted — optional, needed for auto-paste" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未授權 — 可選，自動貼上需要呢個權限"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未授權 — 可選，自動貼上功能需要此權限"
+          }
+        }
+      }
+    },
     "Not granted — required for text injection" : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -1671,6 +1840,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "開啟系統設定 → 隱私權與安全性 → 輔助使用，然後使用 + 按鈕新增此 App。"
+          }
+        }
+      }
+    },
+    "Open System Settings → Privacy & Security → Microphone, then enable Gongje." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟系統設定 → 私隱與保安 → 咪高峰，然後啟用「講嘢」。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "開啟系統設定 → 隱私權與安全性 → 麥克風，然後啟用「講嘢」。"
           }
         }
       }
@@ -2673,6 +2858,23 @@
         }
       }
     },
+    "Text Output" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文字輸出"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "文字輸出"
+          }
+        }
+      }
+    },
     "This model is local-only." : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2686,6 +2888,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "此模型僅限本機使用。"
+          }
+        }
+      }
+    },
+    "This permission enables the hands-free text input feature, which automatically pastes transcribed text into the active app by simulating a keyboard shortcut. Without it, transcribed text is copied to the clipboard for you to paste manually." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "呢個權限啟用免提文字輸入功能，透過模擬鍵盤快捷鍵自動將轉錄文字貼上去使用中嘅 App。冇呢個權限嘅話，轉錄文字會複製到剪貼簿畀你手動貼上。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此權限啟用免持文字輸入功能，透過模擬鍵盤快捷鍵自動將轉錄文字貼上到使用中的應用程式。沒有此權限時，轉錄文字會複製到剪貼簿供您手動貼上。"
           }
         }
       }
@@ -2864,7 +3082,58 @@
         }
       }
     },
+    "VoiceOver announcements" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 朗讀"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 朗讀"
+          }
+        }
+      }
+    },
+    "VoiceOver announcements and all other features work without this permission." : {
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 朗讀同其他所有功能都唔需要呢個權限。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 朗讀及所有其他功能都不需要此權限。"
+          }
+        }
+      }
+    },
+    "VoiceOver announcements for transcription results work without this permission." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 朗讀轉錄結果唔需要呢個權限。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VoiceOver 朗讀轉錄結果不需要此權限。"
+          }
+        }
+      }
+    },
     "Waiting for permission..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "zh-Hant-HK" : {
           "stringUnit" : {
@@ -2892,6 +3161,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "歡迎使用「講嘢」"
+          }
+        }
+      }
+    },
+    "When enabled, transcribed text is automatically pasted into the active app. When disabled, text is copied to the clipboard." : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "zh-Hant-HK" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用後，轉錄嘅文字會自動貼上去使用中嘅 App。停用時，文字會複製到剪貼簿。"
+          }
+        },
+        "zh-Hant-TW" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "啟用後，轉錄的文字會自動貼上到使用中的應用程式。停用時，文字會複製到剪貼簿。"
           }
         }
       }

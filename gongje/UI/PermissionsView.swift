@@ -22,31 +22,45 @@ struct PermissionsView: View {
                         }
                     }
                 }
+                Text("Gongje captures audio from your microphone to perform on-device speech recognition. All processing happens locally on your Mac — no audio is sent to any server.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                if micPermission == .denied {
+                    Text("Open System Settings → Privacy & Security → Microphone, then enable Gongje.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
             }
 
             Section("Accessibility") {
-                VStack(alignment: .leading, spacing: 6) {
-                    HStack {
-                        Image(systemName: accessibilityGranted ? "checkmark.circle.fill" : "xmark.circle.fill")
-                            .foregroundStyle(accessibilityGranted ? .green : .red)
-                        if accessibilityGranted {
-                            Text("Granted")
-                        } else {
-                            Text("Not granted — required for text injection")
-                        }
-                        Spacer()
-                    }
-                    if !accessibilityGranted {
-                        Text("Open System Settings → Privacy & Security → Accessibility, then add this app using the + button.")
-                            .font(.caption)
+                HStack {
+                    if accessibilityGranted {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundStyle(.green)
+                        Text("Granted")
+                    } else {
+                        Image(systemName: "minus.circle")
                             .foregroundStyle(.secondary)
-                        HStack(spacing: 8) {
-                            Button("Open Settings") {
-                                TextOutputService.openAccessibilitySettings()
-                            }
-                            Button("Reveal App in Finder") {
-                                revealAppInFinder()
-                            }
+                        Text("Not granted — optional")
+                    }
+                    Spacer()
+                }
+                Text("This permission enables the hands-free text input feature, which automatically pastes transcribed text into the active app by simulating a keyboard shortcut. Without it, transcribed text is copied to the clipboard for you to paste manually.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Text("VoiceOver announcements and all other features work without this permission.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                if !accessibilityGranted {
+                    Text("Open System Settings → Privacy & Security → Accessibility, then add this app using the + button.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    HStack(spacing: 8) {
+                        Button("Open Settings") {
+                            TextOutputService.openAccessibilitySettings()
+                        }
+                        Button("Reveal App in Finder") {
+                            revealAppInFinder()
                         }
                     }
                 }
