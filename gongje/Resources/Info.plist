@@ -21,7 +21,7 @@
 	<key>LSUIElement</key>
 	<true/>
 	<key>NSAccessibilityUsageDescription</key>
-	<string>Gongje needs Accessibility access to type transcribed text into applications.</string>
+	<string>Gongje uses Accessibility to announce transcription results via VoiceOver and optionally auto-paste text for hands-free voice input.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Gongje needs microphone access to transcribe your Cantonese speech.</string>
 </dict>

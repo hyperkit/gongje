@@ -55,6 +55,22 @@ struct TranscriptionOverlayView: View {
         }
         .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 12))
         .shadow(radius: 8)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(accessibilityText)
+    }
+
+    private var accessibilityText: String {
+        if !appState.correctedText.isEmpty {
+            return appState.correctedText
+        }
+        let full = appState.confirmedText + appState.hypothesisText
+        if !full.isEmpty {
+            return full
+        }
+        if appState.isRecording {
+            return String(localized: "Listening...")
+        }
+        return "Gongje"
     }
 
     private var displayText: AttributedString {

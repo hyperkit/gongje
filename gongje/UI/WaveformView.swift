@@ -9,6 +9,7 @@ struct WaveformView: View {
     private let minBarHeight: CGFloat = 2
 
     @State private var displayEnergy: [Float] = []
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         Canvas { context, size in
@@ -61,13 +62,18 @@ struct WaveformView: View {
                 context.fill(Path(roundedRect: rect, cornerRadius: cornerRadius), with: color)
             }
         }
-        .onAppear { DisplayLink.start() }
+        .onAppear { if !reduceMotion { DisplayLink.start() } }
         .onChange(of: energy, initial: true) { _, newValue in
-            if displayEnergy.count != newValue.count {
+            if reduceMotion || displayEnergy.count != newValue.count {
                 displayEnergy = newValue
             }
         }
+        .accessibilityHidden(true)
         .onReceive(DisplayLink.publisher) {
+            guard !reduceMotion else {
+                displayEnergy = energy
+                return
+            }
             guard displayEnergy.count == energy.count else {
                 displayEnergy = energy
                 return

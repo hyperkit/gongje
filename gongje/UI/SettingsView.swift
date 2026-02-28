@@ -14,7 +14,7 @@ struct SettingsView: View {
                 }
             PermissionsView()
                 .tabItem {
-                    Label("Permissions", systemImage: "lock.shield")
+                    Label("Diagnostics", systemImage: "stethoscope")
                 }
             AdvancedSettingsView()
                 .tabItem {
@@ -39,12 +39,15 @@ enum WaveformDefaults {
 private struct GeneralSettingsView: View {
     @AppStorage("showOverlay") private var showOverlay = true
     @AppStorage("showWaveform") private var showWaveform = WaveformDefaults.defaultEnabled
+    @AppStorage("autoPaste") private var autoPaste = false
+    @AppStorage("voiceOverAnnouncements") private var voiceOverAnnouncements = true
     @AppStorage("preserveClipboard") private var preserveClipboard = true
     @AppStorage("crossoverPaste") private var crossoverPaste = false
     @AppStorage("crossoverPasteDelay") private var crossoverPasteDelay = 50
     @AppStorage("clipboardRestoreDelay") private var clipboardRestoreDelay = 300
     @Environment(\.openWindow) private var openWindow
     @AppStorage("appLanguageOverride") private var selectedLanguage: String = "system"
+    @State private var accessibilityGranted = TextOutputService.isAccessibilityGranted
 
     var body: some View {
         Form {
@@ -76,29 +79,55 @@ private struct GeneralSettingsView: View {
                 }
             }
 
-            Section("Clipboard") {
-                Toggle("Preserve clipboard after paste", isOn: $preserveClipboard)
-                if preserveClipboard {
-                    HStack {
-                        Text("Restore delay:")
+            Section("Accessibility") {
+                Toggle("VoiceOver announcements", isOn: $voiceOverAnnouncements)
+                Text("Announce transcription results via VoiceOver when active.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                Toggle("Hands-free text input", isOn: $autoPaste)
+                Text("Automatically paste transcribed text into the active app for a fully hands-free voice input experience. Requires Accessibility permission.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+
+                if autoPaste && !accessibilityGranted {
+                    HStack(spacing: 6) {
+                        Image(systemName: "exclamationmark.triangle.fill")
+                            .foregroundStyle(.orange)
+                        Text("Accessibility permission is required for auto-paste.")
+                            .font(.caption)
                         Spacer()
-                        TextField("", value: $clipboardRestoreDelay, format: .number)
-                            .frame(width: 60)
-                            .multilineTextAlignment(.trailing)
-                        Text("ms")
-                            .foregroundStyle(.secondary)
+                        Button("Grant Access") {
+                            TextOutputService.openAccessibilitySettings()
+                        }
+                        .controlSize(.small)
                     }
                 }
-                Toggle("Also send Ctrl+V (For Apps running under Crossover/Wine)", isOn: $crossoverPaste)
-                if crossoverPaste {
-                    HStack {
-                        Text("Ctrl+V delay:")
-                        Spacer()
-                        TextField("", value: $crossoverPasteDelay, format: .number)
-                            .frame(width: 60)
-                            .multilineTextAlignment(.trailing)
-                        Text("ms")
-                            .foregroundStyle(.secondary)
+
+                if autoPaste {
+                    Toggle("Preserve clipboard after paste", isOn: $preserveClipboard)
+                    if preserveClipboard {
+                        HStack {
+                            Text("Restore delay:")
+                            Spacer()
+                            TextField("", value: $clipboardRestoreDelay, format: .number)
+                                .frame(width: 60)
+                                .multilineTextAlignment(.trailing)
+                            Text("ms")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                    Toggle("Also send Ctrl+V (For Apps running under Crossover/Wine)", isOn: $crossoverPaste)
+                    if crossoverPaste {
+                        HStack {
+                            Text("Ctrl+V delay:")
+                            Spacer()
+                            TextField("", value: $crossoverPasteDelay, format: .number)
+                                .frame(width: 60)
+                                .multilineTextAlignment(.trailing)
+                            Text("ms")
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
@@ -110,6 +139,9 @@ private struct GeneralSettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .onAppear {
+            accessibilityGranted = TextOutputService.isAccessibilityGranted
+        }
     }
 }
 

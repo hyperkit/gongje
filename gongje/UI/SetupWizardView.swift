@@ -9,7 +9,7 @@ struct SetupWizardView: View {
     var onComplete: () -> Void
 
     @State private var currentStep = 0
-    private let totalSteps = 6
+    private let totalSteps = 5
 
     var body: some View {
         VStack(spacing: 0) {
@@ -45,10 +45,9 @@ struct SetupWizardView: View {
         switch currentStep {
         case 0: WelcomeStep(onNext: { currentStep = 1 })
         case 1: MicrophoneStep(onNext: { currentStep = 2 }, onBack: { currentStep = 0 })
-        case 2: AccessibilityStep(onNext: { currentStep = 3 }, onBack: { currentStep = 1 })
-        case 3: ModelStep(onNext: { currentStep = 4 }, onBack: { currentStep = 2 })
-        case 4: LLMStep(onNext: { currentStep = 5 }, onBack: { currentStep = 3 })
-        case 5: ReadyStep(onFinish: finish, onBack: { currentStep = 4 })
+        case 2: ModelStep(onNext: { currentStep = 3 }, onBack: { currentStep = 1 })
+        case 3: LLMStep(onNext: { currentStep = 4 }, onBack: { currentStep = 2 })
+        case 4: ReadyStep(onFinish: finish, onBack: { currentStep = 3 })
         default: EmptyView()
         }
     }
@@ -94,8 +93,7 @@ private struct WelcomeStep: View {
             .frame(maxWidth: 250)
 
             VStack(alignment: .leading, spacing: 6) {
-                Label("Microphone access", systemImage: "mic")
-                Label("Accessibility permission", systemImage: "accessibility")
+                Label("Microphone test", systemImage: "mic")
                 Label("Speech recognition model", systemImage: "cpu")
                 Label("Text correction (optional)", systemImage: "text.badge.checkmark")
                 Label("Keyboard shortcut", systemImage: "keyboard")
@@ -136,32 +134,41 @@ private struct WelcomeStep: View {
     }
 }
 
-// MARK: - Step 2: Microphone
+// MARK: - Step 2: Microphone Test
 
 private struct MicrophoneStep: View {
     var onNext: () -> Void
     var onBack: () -> Void
 
-    @State private var micStatus: AVAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .audio)
-    @State private var requesting = false
+    @State private var micStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+    @State private var monitor = MicTestMonitor()
 
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
 
-            Image(systemName: micStatus == .authorized ? "mic.circle.fill" : "mic.circle")
+            Image(systemName: iconName)
                 .font(.system(size: 48))
-                .foregroundStyle(micStatus == .authorized ? Color.green : Color.accentColor)
+                .foregroundStyle(iconColor)
 
-            Text("Microphone Access")
+            Text("Test Your Microphone")
                 .font(.title2)
                 .fontWeight(.semibold)
 
-            Text("Gongje needs microphone access to hear your voice and transcribe it into text.")
+            Text(descriptionText)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
 
-            statusView
+            if monitor.isRunning {
+                WaveformView(energy: monitor.bands)
+                    .frame(height: 80)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background(
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(.black.opacity(0.8))
+                    )
+            }
 
             Spacer()
 
@@ -169,155 +176,88 @@ private struct MicrophoneStep: View {
                 Button("Back") { onBack() }
                     .buttonStyle(.bordered)
                 Spacer()
-                if micStatus == .authorized {
-                    Button("Continue") { onNext() }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                } else if micStatus == .denied {
-                    Button("Open System Settings") {
-                        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                } else {
-                    Button("Grant Access") {
-                        requesting = true
-                        Task {
-                            _ = await AVCaptureDevice.requestAccess(for: .audio)
-                            micStatus = AVCaptureDevice.authorizationStatus(for: .audio)
-                            requesting = false
-                            if micStatus == .authorized {
-                                try? await Task.sleep(for: .milliseconds(500))
-                                onNext()
-                            }
-                        }
-                    }
-                    .buttonStyle(.borderedProminent)
-                    .controlSize(.large)
-                    .disabled(requesting)
-                }
+                bottomButtons
             }
+        }
+        .onDisappear {
+            monitor.stop()
+        }
+    }
+
+    // MARK: - Computed Properties
+
+    private var iconName: String {
+        if monitor.isRunning {
+            "mic.circle.fill"
+        } else {
+            "mic.circle"
+        }
+    }
+
+    private var iconColor: Color {
+        monitor.isRunning ? .green : .accentColor
+    }
+
+    private var descriptionText: LocalizedStringKey {
+        if micStatus == .denied {
+            "Microphone access was denied. Open System Settings to enable it."
+        } else if micStatus == .restricted {
+            "Microphone access is restricted by system policy."
+        } else if monitor.isRunning {
+            "Speak or make a sound to see the waveform."
+        } else {
+            "Check that your microphone is working before continuing."
         }
     }
 
     @ViewBuilder
-    private var statusView: some View {
-        HStack(spacing: 6) {
-            Image(systemName: micStatus == .authorized ? "checkmark.circle.fill" : "xmark.circle.fill")
-                .foregroundStyle(micStatus == .authorized ? .green : .red)
-            Text(statusText)
-                .font(.callout)
+    private var bottomButtons: some View {
+        if micStatus == .denied || micStatus == .restricted {
+            if micStatus == .denied {
+                Button("Open System Settings") {
+                    if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Microphone") {
+                        NSWorkspace.shared.open(url)
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+            }
+            Button("Skip") { onNext() }
+                .buttonStyle(.bordered)
+        } else if monitor.isRunning {
+            Button("Continue") {
+                monitor.stop()
+                onNext()
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
+        } else {
+            Button("Test Microphone") {
+                startTest()
+            }
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
         }
-        .padding(.vertical, 4)
     }
 
-    private var statusText: LocalizedStringKey {
-        switch micStatus {
-        case .authorized: "Microphone access granted"
-        case .denied: "Denied — open System Settings to enable"
-        case .restricted: "Restricted by system policy"
-        case .notDetermined: "Not yet requested"
-        @unknown default: "Unknown"
+    // MARK: - Actions
+
+    private func startTest() {
+        if micStatus == .notDetermined {
+            Task {
+                _ = await AVCaptureDevice.requestAccess(for: .audio)
+                micStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+                if micStatus == .authorized {
+                    monitor.start()
+                }
+            }
+        } else if micStatus == .authorized {
+            monitor.start()
         }
     }
 }
 
-// MARK: - Step 3: Accessibility
-
-private struct AccessibilityStep: View {
-    var onNext: () -> Void
-    var onBack: () -> Void
-
-    @State private var granted = TextOutputService.isAccessibilityGranted
-    @State private var pollTimer: Timer?
-
-    var body: some View {
-        VStack(spacing: 16) {
-            Spacer()
-
-            Image(systemName: granted ? "accessibility.badge.arrow.up.right" : "accessibility")
-                .font(.system(size: 48))
-                .foregroundStyle(granted ? Color.green : Color.accentColor)
-
-            Text("Accessibility Permission")
-                .font(.title2)
-                .fontWeight(.semibold)
-
-            Text("Gongje uses Accessibility to type transcribed text into any app. You'll need to add Gongje in System Settings.")
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.secondary)
-
-            HStack(spacing: 6) {
-                Image(systemName: granted ? "checkmark.circle.fill" : "xmark.circle.fill")
-                    .foregroundStyle(granted ? .green : .red)
-                if granted {
-                    Text("Accessibility access granted")
-                        .font(.callout)
-                } else {
-                    Text("Waiting for permission...")
-                        .font(.callout)
-                }
-            }
-            .padding(.vertical, 4)
-
-            if !granted {
-                HStack(spacing: 12) {
-                    Button("Open System Settings") {
-                        TextOutputService.openAccessibilitySettings()
-                    }
-                    .buttonStyle(.borderedProminent)
-
-                    Button("Reveal App in Finder") {
-                        NSWorkspace.shared.activateFileViewerSelecting([Bundle.main.bundleURL])
-                    }
-                    .buttonStyle(.bordered)
-                }
-            }
-
-            Spacer()
-
-            HStack {
-                Button("Back") { onBack() }
-                    .buttonStyle(.bordered)
-                Spacer()
-                if granted {
-                    Button("Continue") { onNext() }
-                        .buttonStyle(.borderedProminent)
-                        .controlSize(.large)
-                } else {
-                    Button("Skip for now") { onNext() }
-                        .buttonStyle(.bordered)
-                }
-            }
-        }
-        .onAppear { startPolling() }
-        .onDisappear { stopPolling() }
-    }
-
-    private func startPolling() {
-        pollTimer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
-            let newValue = TextOutputService.isAccessibilityGranted
-            if newValue != granted {
-                granted = newValue
-                if granted {
-                    stopPolling()
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        onNext()
-                    }
-                }
-            }
-        }
-    }
-
-    private func stopPolling() {
-        pollTimer?.invalidate()
-        pollTimer = nil
-    }
-}
-
-// MARK: - Step 4: Model Selection + Download
+// MARK: - Step 3: Model Selection + Download
 
 private struct ModelStep: View {
     @Environment(AppState.self) private var appState
@@ -437,7 +377,7 @@ private struct ModelStep: View {
     }
 }
 
-// MARK: - Step 5: LLM Setup
+// MARK: - Step 4: LLM Setup
 
 private struct LLMStep: View {
     @Environment(AppState.self) private var appState
@@ -569,7 +509,7 @@ private struct LLMStep: View {
     }
 }
 
-// MARK: - Step 6: Ready
+// MARK: - Step 5: Ready
 
 private struct ReadyStep: View {
     var onFinish: () -> Void

@@ -22,6 +22,7 @@
 		8CF2E7FA5877571E4C2C3C8C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 382B0BA12CC08F3E90CE0347 /* Assets.xcassets */; };
 		A1B2C3D4E5F6789012345678 /* AdvancedSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6789012345678A1 /* AdvancedSettingsView.swift */; };
 		A4B6D5EAB517D0AEC3CF0C22 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BA4FF6CEB30DBBF206565D2 /* SettingsView.swift */; };
+		A5B6C7D8E9F01234ABCD7890 /* MicTestMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */; };
 		AA0D0B7769B06E0DBB9DE416 /* TranscriptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6327C17D70111A72752A356 /* TranscriptionService.swift */; };
 		B0E6443390FD9CDEC60C8267 /* GongjeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0361D92784E3A41CBD21219 /* GongjeTests.swift */; };
 		BBCA5A3D79B7DB8E6E6081D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF762DCEB44700BDD6904FFB /* AppDelegate.swift */; };
@@ -83,6 +84,7 @@
 		DF762DCEB44700BDD6904FFB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoiseSuppressingAudioProcessor.swift; sourceTree = "<group>"; };
 		F3628216DF133D2A02265B0F /* AudioEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioEngine.swift; sourceTree = "<group>"; };
+		F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicTestMonitor.swift; sourceTree = "<group>"; };
 		F6327C17D70111A72752A356 /* TranscriptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptionService.swift; sourceTree = "<group>"; };
 		F941812FAFB179D396921C44 /* WhisperModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhisperModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -127,6 +129,7 @@
 				F3628216DF133D2A02265B0F /* AudioEngine.swift */,
 				0973B04877AC0D42544C4E58 /* FrequencyAnalyzer.swift */,
 				AE6C4F71B3359A6098A91294 /* LLMService.swift */,
+				F4A3B5C6D7E80912ABCD3456 /* MicTestMonitor.swift */,
 				171D06EA9C531C5F153951B6 /* ModelManager.swift */,
 				E2B3C4D5F6071829A3B4C5D6 /* NoiseSuppressingAudioProcessor.swift */,
 				BE2CA3D92484C6875BAE85E4 /* TextOutputService.swift */,
@@ -345,6 +348,7 @@
 				DE36DF41AC89F9257E1E1D85 /* LLMModel.swift in Sources */,
 				F2B40A6C6195DBB19194A19A /* LLMService.swift in Sources */,
 				E0BFFC5922CF4C32808661FC /* MenuBarView.swift in Sources */,
+				A5B6C7D8E9F01234ABCD7890 /* MicTestMonitor.swift in Sources */,
 				19DE6D83FE6C953839DBD9FC /* ModelManager.swift in Sources */,
 				D832680BF271D784CCEFEB43 /* PermissionsView.swift in Sources */,
 				853707BD94F1CD0C678C08E1 /* SettingsManager.swift in Sources */,
@@ -378,7 +382,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = gongje/Resources/gongje.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = gongje/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -387,7 +391,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
 			};
@@ -554,7 +558,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = gongje/Resources/gongje.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = gongje/Resources/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
@@ -563,7 +567,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.6;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 5.9;
 			};

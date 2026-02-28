@@ -62,6 +62,8 @@ struct GongjeApp: App {
             "showOverlay": true,
             "preserveClipboard": true,
             "showWaveform": WaveformDefaults.defaultEnabled,
+            "autoPaste": false,
+            "voiceOverAnnouncements": true,
         ])
 
         let state = AppState()
