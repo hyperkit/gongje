@@ -1,11 +1,15 @@
 import AppKit
+#if !APPSTORE
 import Carbon.HIToolbox
+#endif
 
 enum TextOutputService {
     static func injectText(_ text: String) {
         guard !text.isEmpty else { return }
 
         let pasteboard = NSPasteboard.general
+
+        #if !APPSTORE
         let autoPaste = UserDefaults.standard.bool(forKey: "autoPaste")
         let shouldPaste = autoPaste && isAccessibilityGranted
         let preserveClipboard = shouldPaste && UserDefaults.standard.bool(forKey: "preserveClipboard")
@@ -23,6 +27,7 @@ enum TextOutputService {
                 return copy
             }
         }
+        #endif
 
         // Write text to clipboard (always — baseline behavior)
         pasteboard.clearContents()
@@ -34,6 +39,7 @@ enum TextOutputService {
             announceForVoiceOver(text)
         }
 
+        #if !APPSTORE
         // Simulate paste only when auto-paste is enabled and AX is granted
         guard shouldPaste else { return }
 
@@ -68,8 +74,10 @@ enum TextOutputService {
                 pasteboard.writeObjects(previousItems)
             }
         }
+        #endif
     }
 
+    #if !APPSTORE
     private static func simulatePaste(modifier: CGEventFlags) {
         let source = CGEventSource(stateID: .combinedSessionState)
 
@@ -82,6 +90,7 @@ enum TextOutputService {
         keyDown?.post(tap: .cghidEventTap)
         keyUp?.post(tap: .cghidEventTap)
     }
+    #endif
 
     /// Announce transcription result via VoiceOver.
     /// Uses NSAccessibility posting which works without AXIsProcessTrusted
@@ -97,6 +106,7 @@ enum TextOutputService {
         )
     }
 
+    #if !APPSTORE
     static var isAccessibilityGranted: Bool {
         AXIsProcessTrusted()
     }
@@ -114,4 +124,5 @@ enum TextOutputService {
             NSWorkspace.shared.open(url)
         }
     }
+    #endif
 }

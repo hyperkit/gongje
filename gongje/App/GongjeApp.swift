@@ -58,13 +58,16 @@ struct GongjeApp: App {
     }
 
     init() {
-        UserDefaults.standard.register(defaults: [
+        var defaults: [String: Any] = [
             "showOverlay": true,
-            "preserveClipboard": true,
             "showWaveform": WaveformDefaults.defaultEnabled,
-            "autoPaste": false,
             "voiceOverAnnouncements": true,
-        ])
+        ]
+        #if !APPSTORE
+        defaults["autoPaste"] = false
+        defaults["preserveClipboard"] = true
+        #endif
+        UserDefaults.standard.register(defaults: defaults)
 
         let state = AppState()
         let llmService = LLMService(appState: state)

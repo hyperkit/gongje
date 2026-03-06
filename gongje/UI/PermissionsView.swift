@@ -3,7 +3,9 @@ import AVFoundation
 
 struct PermissionsView: View {
     @State private var micPermission: AVAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: .audio)
+    #if !APPSTORE
     @State private var accessibilityGranted = TextOutputService.isAccessibilityGranted
+    #endif
 
     var body: some View {
         Form {
@@ -32,6 +34,7 @@ struct PermissionsView: View {
                 }
             }
 
+            #if !APPSTORE
             Section("Accessibility") {
                 HStack {
                     if accessibilityGranted {
@@ -65,11 +68,14 @@ struct PermissionsView: View {
                     }
                 }
             }
+            #endif
 
             Section {
                 Button("Refresh Status") {
                     micPermission = AVCaptureDevice.authorizationStatus(for: .audio)
+                    #if !APPSTORE
                     accessibilityGranted = TextOutputService.isAccessibilityGranted
+                    #endif
                 }
             }
         }

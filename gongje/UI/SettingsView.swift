@@ -39,15 +39,17 @@ enum WaveformDefaults {
 private struct GeneralSettingsView: View {
     @AppStorage("showOverlay") private var showOverlay = true
     @AppStorage("showWaveform") private var showWaveform = WaveformDefaults.defaultEnabled
-    @AppStorage("autoPaste") private var autoPaste = false
     @AppStorage("voiceOverAnnouncements") private var voiceOverAnnouncements = true
+    #if !APPSTORE
+    @AppStorage("autoPaste") private var autoPaste = false
     @AppStorage("preserveClipboard") private var preserveClipboard = true
     @AppStorage("crossoverPaste") private var crossoverPaste = false
     @AppStorage("crossoverPasteDelay") private var crossoverPasteDelay = 50
     @AppStorage("clipboardRestoreDelay") private var clipboardRestoreDelay = 300
+    @State private var accessibilityGranted = TextOutputService.isAccessibilityGranted
+    #endif
     @Environment(\.openWindow) private var openWindow
     @AppStorage("appLanguageOverride") private var selectedLanguage: String = "system"
-    @State private var accessibilityGranted = TextOutputService.isAccessibilityGranted
 
     var body: some View {
         Form {
@@ -85,6 +87,7 @@ private struct GeneralSettingsView: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
+                #if !APPSTORE
                 Toggle("Hands-free text input", isOn: $autoPaste)
                 Text("Automatically paste transcribed text into the active app for a fully hands-free voice input experience. Requires Accessibility permission.")
                     .font(.caption)
@@ -130,6 +133,7 @@ private struct GeneralSettingsView: View {
                         }
                     }
                 }
+                #endif
             }
 
             Section {
@@ -139,9 +143,11 @@ private struct GeneralSettingsView: View {
             }
         }
         .formStyle(.grouped)
+        #if !APPSTORE
         .onAppear {
             accessibilityGranted = TextOutputService.isAccessibilityGranted
         }
+        #endif
     }
 }
 

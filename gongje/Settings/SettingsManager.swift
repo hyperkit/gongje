@@ -4,8 +4,10 @@ import SwiftUI
 struct SettingsManager {
     @AppStorage("selectedModel") static var selectedModelRaw: String = WhisperModel.systemRecommended.rawValue
     @AppStorage("showOverlay") static var showOverlay: Bool = true
+    #if !APPSTORE
     @AppStorage("preserveClipboard") static var preserveClipboard: Bool = true
     @AppStorage("autoPaste") static var autoPaste: Bool = false
+    #endif
     @AppStorage("voiceOverAnnouncements") static var voiceOverAnnouncements: Bool = true
 
     static var selectedModel: WhisperModel {
